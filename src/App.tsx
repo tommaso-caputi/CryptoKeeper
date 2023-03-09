@@ -31,10 +31,10 @@ const FirstPage = () => {
     <IonPage>
       <div style={{ height: '100%', width: '100%', backgroundColor: 'white', paddingTop: '50px' }}>
         <IonImg src="https://scontent.fbri2-1.fna.fbcdn.net/v/t39.30808-6/327306278_868028794311544_6276392210937262156_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=ZsRHGTikDwYAX-aOM8H&_nc_ht=scontent.fbri2-1.fna&oh=00_AfDURguPCXslAgYI4YFgqjwbhLdXxSTThbcEnEDuTxlflw&oe=640E8363"></IonImg>
-        <div style={{ textAlign: 'center', height: '20%' }}>
+        <div style={{ textAlign: 'center' }}>
           <h1 style={{ color: 'black' }}>Crypto Keeper</h1>
         </div>
-        <div style={{ textAlign: 'center', height: '30%' }}>
+        <div style={{ paddingTop: '50px', textAlign: 'center', height: '30%' }}>
           <IonButton size="large" onClick={() => history.push('/login')}>Start Now</IonButton>
         </div>
       </div>
