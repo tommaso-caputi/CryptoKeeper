@@ -1,16 +1,12 @@
-import {IonHeader, IonPage, IonTitle, IonToolbar, IonButton,} from '@ionic/react';
+import { IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonContent, } from '@ionic/react';
 import { createBrowserHistory } from "history";
-import MetaMaskSDK from '@metamask/sdk';
 
-const MMSDK = new MetaMaskSDK();
-const ethereum = MMSDK.getProvider();
 const history = createBrowserHistory({ forceRefresh: true });
 
 const Login: React.FC = () => {
 
-  const connect = async () => {
-    const result = await ethereum.request({ method: "eth_requestAccounts" });
-    history.push('/menu', { address: result[0] });
+  const connect = () => {
+    history.push('/menu', { mnemonic: "travel upgrade inside soda birth essence junk merit never twenty system opinion" });
   }
 
   return (
@@ -20,7 +16,9 @@ const Login: React.FC = () => {
           <IonTitle>Login</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonButton onClick={connect}>Connect to metamask</IonButton>
+      <IonContent>
+      </IonContent>
+      {/* <IonButton onClick={connect}>Import wallet with mnemonic</IonButton> */}
     </IonPage>
   );
 };

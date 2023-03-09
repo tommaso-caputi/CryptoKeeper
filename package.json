@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@bitcoin-computer/lib": "^0.15.0-beta.0",
     "@capacitor/android": "4.7.0",
     "@capacitor/app": "4.1.1",
     "@capacitor/core": "4.7.0",
@@ -22,6 +23,8 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
+    "bitcoin-computer": "^0.15.0-beta.0",
+    "bitcoin-computer-lib": "^0.8.1-beta",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
@@ -77,7 +80,8 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "4.7.0"
+    "@capacitor/cli": "4.7.0",
+    "@types/bitcoin-computer__lib": "^0.10.0"
   },
   "description": "An Ionic project"
 }
