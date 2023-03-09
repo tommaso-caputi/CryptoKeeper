@@ -1,7 +1,6 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonLabel } from '@ionic/react';
+import {IonHeader, IonPage, IonTitle, IonToolbar, IonButton,} from '@ionic/react';
 import { createBrowserHistory } from "history";
 import MetaMaskSDK from '@metamask/sdk';
-import { useState } from 'react';
 
 const MMSDK = new MetaMaskSDK();
 const ethereum = MMSDK.getProvider();
