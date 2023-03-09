@@ -3,6 +3,7 @@ import { IonApp, IonButton, IonContent, IonImg, IonLabel, IonPage, IonRouterOutl
 import { IonReactRouter } from '@ionic/react-router';
 import Login from './pages/Login';
 import Menu from './pages/Menu';
+import Register from './pages/Register';
 import { createBrowserHistory } from "history";
 
 import '@ionic/react/css/core.css';
@@ -55,6 +56,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/firstpage">
           <FirstPage />
+        </Route>
+        <Route exact path="/register">
+          <Register />
         </Route>
         <Route exact path="/">
           <Redirect to="/firstpage" />
