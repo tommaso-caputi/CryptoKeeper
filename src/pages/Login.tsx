@@ -1,13 +1,46 @@
-import { IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonContent, IonInput, IonItem, IonLabel, } from '@ionic/react';
+import { IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonContent, IonInput, IonItem, IonLabel, useIonAlert, } from '@ionic/react';
 import { createBrowserHistory } from "history";
+import { useState } from 'react';
 
 const history = createBrowserHistory({ forceRefresh: true });
 
 const Login: React.FC = () => {
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [presentAlert] = useIonAlert();
 
-  const connect = () => {
-    history.push('/menu', { mnemonic: "travel upgrade inside soda birth essence junk merit never twenty system opinion" });
+  const login = () => {
+    //history.push('/menu', { mnemonic: "travel upgrade inside soda birth essence junk merit never twenty system opinion" });
+    console.log(email, password);
+    fetch("http://cryptokeeper.altervista.org/APP/webhook.php", {
+      method: "POST",
+      body: JSON.stringify({
+        "action": "login",
+        "email": email,
+        "password": password,
+      })
+    })
+      .then(response => {
+        response.text()
+          .then(response => {
+            if (response === "True") {
+              presentAlert({
+                header: 'Success',
+                message: "Logged successfully",
+                buttons: ['OK'],
+              })
+              history.push('/Menu', { email: email });
+            } else {
+              presentAlert({
+                header: 'Failed',
+                message: "Email or password are incorrect",
+                buttons: ['OK'],
+              })
+            }
+          });
+      })
   }
+
 
   return (
     <IonPage>
@@ -18,14 +51,14 @@ const Login: React.FC = () => {
         </div>
         <div style={{ paddingTop: '40px', }}>
           <IonLabel position="stacked">Email Address</IonLabel>
-          <IonInput clearOnEdit={true} placeholder="Enter email"></IonInput>
+          <IonInput onIonInput={(e: any) => setEmail(e.target.value)} clearOnEdit={true} placeholder="Enter email"></IonInput>
         </div>
         <div style={{ paddingTop: '20px', }}>
           <IonLabel position="stacked">Password</IonLabel>
-          <IonInput clearOnEdit={true} placeholder="Enter password"></IonInput>
+          <IonInput onIonInput={(e: any) => setPassword(e.target.value)} clearOnEdit={true} placeholder="Enter password"></IonInput>
         </div>
         <div style={{ paddingTop: '50px', }}>
-          <IonButton size="large" expand='block'>Log In</IonButton>
+          <IonButton onClick={login} size="large" expand='block'>Log In</IonButton>
         </div>
         <div style={{ paddingTop: '20px', textAlign: 'center' }}>
           <IonLabel>or</IonLabel>

@@ -1,5 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonButton, IonContent, IonImg, IonLabel, IonPage, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonApp, IonButton, IonImg, IonPage, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Login from './pages/Login';
 import Menu from './pages/Menu';

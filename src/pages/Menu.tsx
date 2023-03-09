@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 setupIonicReact();
 
 const Menu: React.FC = props => {
-    const location = useLocation<{ mnemonic: string }>();
+    const location = useLocation<{ mnemonic: string, email: string}>();
     const [computer] = useState(new Computer({
         mnemonic: location.state.mnemonic,
         chain: "LTC",
@@ -34,7 +34,8 @@ const Menu: React.FC = props => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle><Balance /></IonTitle>
+                    {/* <IonTitle><Balance /></IonTitle> */}
+                    <IonTitle>Email: {location.state.email}</IonTitle>
                 </IonToolbar>
             </IonHeader>
         </IonPage>

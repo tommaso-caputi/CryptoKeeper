@@ -81,7 +81,8 @@
   },
   "devDependencies": {
     "@capacitor/cli": "4.7.0",
-    "@types/bitcoin-computer__lib": "^0.10.0"
+    "@types/bitcoin-computer__lib": "^0.10.0",
+    "@types/jquery": "^3.5.16"
   },
   "description": "An Ionic project"
 }
