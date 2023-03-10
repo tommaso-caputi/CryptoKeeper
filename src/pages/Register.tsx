@@ -12,7 +12,7 @@ const Register: React.FC = () => {
 
     const registration = async () => {
         if (checkPassword() && checkEmail()) {
-            fetch("http://cryptokeeper.altervista.org/APP/webhook.php", {
+            fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
                 method: "POST",
                 body: JSON.stringify({
                     "action": "checkUserEmail",
@@ -38,7 +38,7 @@ const Register: React.FC = () => {
 
     const register = () => {
         let mnemonic = createMnemonic();
-        fetch("http://cryptokeeper.altervista.org/APP/webhook.php", {
+        fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
             method: "POST",
             body: JSON.stringify({
                 "action": "registration",

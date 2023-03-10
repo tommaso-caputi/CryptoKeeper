@@ -9,7 +9,8 @@ setupIonicReact();
 const Menu: React.FC = props => {
     const location = useLocation<{ mnemonic: string, email: string}>();
     const [computer] = useState(new Computer({
-        mnemonic: location.state.mnemonic,
+        //mnemonic: location.state.mnemonic,
+        mnemonic: "travel upgrade inside soda birth essence junk merit never twenty system opinion",
         chain: "LTC",
         network: "testnet",
         url: "https://node.bitcoincomputer.io",
@@ -36,6 +37,7 @@ const Menu: React.FC = props => {
                 <IonToolbar>
                     {/* <IonTitle><Balance /></IonTitle> */}
                     <IonTitle>Email: {location.state.email}</IonTitle>
+                    <IonLabel>Mnemonic: {location.state.mnemonic}</IonLabel>
                 </IonToolbar>
             </IonHeader>
         </IonPage>

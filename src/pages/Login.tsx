@@ -11,8 +11,8 @@ const Login: React.FC = () => {
 
   const login = () => {
     //history.push('/menu', { mnemonic: "travel upgrade inside soda birth essence junk merit never twenty system opinion" });
-    console.log(email, password);
-    fetch("http://cryptokeeper.altervista.org/APP/webhook.php", {
+
+    fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
       method: "POST",
       body: JSON.stringify({
         "action": "login",
@@ -22,14 +22,15 @@ const Login: React.FC = () => {
     })
       .then(response => {
         response.text()
-          .then(response => {
-            if (response === "True") {
+          .then(response => {             
+            let a = response.split('.')
+            if (a[1]==='True') {
               presentAlert({
                 header: 'Success',
                 message: "Logged successfully",
                 buttons: ['OK'],
               })
-              history.push('/Menu', { email: email });
+              history.push('/Menu', { email: email ,mnemonic:a[0]},);
             } else {
               presentAlert({
                 header: 'Failed',
