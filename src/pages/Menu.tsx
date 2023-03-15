@@ -32,7 +32,7 @@ const Menu: React.FC = () => {
           <IonTitle>Email: {location.state.email}</IonTitle>
         </IonToolbar>
         <IonText >Address: {location.state.address}</IonText><br />
-        <IonText>Balance: {balance}</IonText>
+        <IonText>Balance: {balance} BTC</IonText>
       </IonHeader>
     </IonPage>
   );
