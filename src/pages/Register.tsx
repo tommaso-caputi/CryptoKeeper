@@ -41,52 +41,35 @@ const Register: React.FC = () => {
   };
 
   const register = () => {
-    let mnemonic = createMnemonic();
-    fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
-      method: "POST",
-      body: JSON.stringify({
-        action: "registration",
-        email: email,
-        password: password,
-        mnemonic: mnemonic,
-      }),
-    }).then((response) => {
-      response.text().then((response) => {
-        if (response === "Success") {
-          presentAlert({
-            header: "Success",
-            message: "Mnemonic of new wallet: " + mnemonic,
-            buttons: ["OK"],
-            subHeader: "Account successfully created",
+    fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })
+      .then(response => response.json())
+      .then(result =>
+        fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+          method: "POST",
+          body: JSON.stringify({
+            action: "registration",
+            email: email,
+            password: password,
+            public_key: result.public,
+            private_key: result.private,
+            address: result.address,
+            wif: result.wif
+          }),
+        }).then((response) => {
+          response.text().then((response) => {
+            if (response === "Success") {
+              presentAlert({
+                header: "Success",
+                message: "Address created: " + result.address,
+                buttons: ["OK"],
+                subHeader: "Account successfully created",
+              });
+              history.push("/login");
+            }
           });
-          history.push("/login");
-        }
-      });
-    });
-  };
-
-  const createMnemonic = () => {
-    const alphabet = "abcdefghijklmnopqrstuvwxyz";
-    const lengthOptions = [4, 5, 6];
-    let words = [];
-
-    for (let i = 0; i < 12; i++) {
-      let wordLength =
-        lengthOptions[Math.floor(Math.random() * lengthOptions.length)];
-      let word = "";
-
-      for (let j = 0; j < wordLength; j++) {
-        let randomChar = alphabet.charAt(
-          Math.floor(Math.random() * alphabet.length)
-        );
-        word += randomChar;
-      }
-
-      words.push(word);
-    }
-
-    return words.join(" ");
-    return "esempio mnemonic";
+        })
+      )
+      .catch(error => console.log('error', error));
   };
 
   const checkPassword = () => {
