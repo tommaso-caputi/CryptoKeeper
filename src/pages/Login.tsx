@@ -30,13 +30,21 @@ const Login: React.FC = () => {
     }).then((response) => {
       response.text().then((response) => {
         let data = response.split(".");
-        if (data[4] === "True") {
-          presentAlert({
-            header: "Success",
-            message: "Logged successfully",
-            buttons: ["OK"],
-          });
-          history.push("/Menu", { email: email, public_key: data[0], private_key: data[1], address: data[2], wif: data[3] });
+        console.log(data)
+        if (data[5] === "True") {
+          if (data[4] === "1") {
+            presentAlert({
+              header: "Success",
+              message: "Logged successfully"
+            });
+            history.push("/Menu", { email: email, public_key: data[0], private_key: data[1], address: data[2], wif: data[3] });
+          } else {
+            presentAlert({
+              header: "Failed",
+              message: "Email is not confirmed",
+              buttons: ["OK"],
+            });
+          }
         } else {
           presentAlert({
             header: "Failed",

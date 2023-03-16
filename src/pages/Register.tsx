@@ -63,13 +63,24 @@ const Register: React.FC = () => {
         }).then((response) => {
           response.text().then((response) => {
             if (response === "Success") {
+              fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+                method: "POST",
+                body: JSON.stringify({
+                  action: "sendConfirmEmail",
+                  email: email
+                }),
+              })
               presentAlert({
                 header: "Success",
                 message: "Address created: " + result.address,
-                buttons: ["OK"],
-                subHeader: "Account successfully created",
+                subHeader: "Account successfully created, check email for confirm",
+                buttons: [{
+                  text: 'OK',
+                  handler: () => {
+                    history.push("/login");
+                  },
+                },]
               });
-              history.push("/login");
             }
           });
         })
