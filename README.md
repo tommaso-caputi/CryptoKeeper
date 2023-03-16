@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="src/assets/Banner CryptoKeeper.png" alt="Logo">
+    <img src="src/assets/Banner CryptoKeeper.png" alt="Logo" width="50%" height="50%">
   </a>
 
   <h3 align="center">Crypto Keeper</h3>
