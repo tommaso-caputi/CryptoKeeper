@@ -7,7 +7,7 @@ import {
 } from "@ionic/react";
 import { createBrowserHistory } from "history";
 import { useState } from "react";
-import sha256, { Hash, HMAC } from "fast-sha256";
+import sha256 from "fast-sha256";
 
 const history = createBrowserHistory({ forceRefresh: true });
 
@@ -44,10 +44,11 @@ const Register: React.FC = () => {
   const register = () => {
     const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
       .map(b => b.toString(16).padStart(2, '0'))
-      .join('');
+      .join('')
+    console.log(passwordHash)
     fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })
       .then(response => response.json())
-      .then(result =>
+      .then(result => (
         fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
           method: "POST",
           body: JSON.stringify({
@@ -72,7 +73,7 @@ const Register: React.FC = () => {
             }
           });
         })
-      )
+      ))
       .catch(error => console.log('error', error));
   };
 

@@ -7,7 +7,7 @@ import {
 } from "@ionic/react";
 import { createBrowserHistory } from "history";
 import { useState } from "react";
-import sha256, { Hash, HMAC } from "fast-sha256";
+import sha256 from "fast-sha256";
 
 const history = createBrowserHistory({ forceRefresh: true });
 
@@ -17,12 +17,15 @@ const Login: React.FC = () => {
   const [presentAlert] = useIonAlert();
 
   const login = () => {
+    const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('')
     fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
       method: "POST",
       body: JSON.stringify({
         action: "login",
         email: email,
-        password: password,
+        password: passwordHash,
       }),
     }).then((response) => {
       response.text().then((response) => {
