@@ -21,7 +21,7 @@
   <p align="center">
     Mobile Crypto Wallet app with nfc transactions
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://cryptokeeperitis.altervista.org"><strong>Explore website »</strong></a>
     <br />
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
