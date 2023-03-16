@@ -74,8 +74,13 @@ const Register: React.FC = () => {
                 header: "Success",
                 message: "Address created: " + result.address,
                 subHeader: "Account successfully created, check email for confirm",
+                buttons: [{
+                  text: 'OK',
+                  handler: () => {
+                    history.push("/login");
+                  },
+                },]
               });
-              //history.push("/login");
             }
           });
         })
