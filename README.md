@@ -19,7 +19,7 @@
   <h3 align="center">Crypto Keeper</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    Mobile Crypto Wallet app with nfc transactions
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
