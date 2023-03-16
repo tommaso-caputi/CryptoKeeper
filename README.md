@@ -21,14 +21,16 @@
   <p align="center">
     Mobile Crypto Wallet app with nfc transactions
     <br />
-    <a href="https://cryptokeeperitis.altervista.org"><strong>Explore website »</strong></a>
+    <a href="https://cryptokeeper.altervista.org"><strong>Explore website »</strong></a>
     <br />
+    <!--
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
     ·
     <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
     ·
     <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    -->
   </p>
 </div>
 
