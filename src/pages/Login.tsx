@@ -7,6 +7,7 @@ import {
 } from "@ionic/react";
 import { createBrowserHistory } from "history";
 import { useState } from "react";
+import sha256, { Hash, HMAC } from "fast-sha256";
 
 const history = createBrowserHistory({ forceRefresh: true });
 

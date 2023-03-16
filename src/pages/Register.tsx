@@ -7,6 +7,7 @@ import {
 } from "@ionic/react";
 import { createBrowserHistory } from "history";
 import { useState } from "react";
+import sha256, { Hash, HMAC } from "fast-sha256";
 
 const history = createBrowserHistory({ forceRefresh: true });
 
@@ -41,6 +42,9 @@ const Register: React.FC = () => {
   };
 
   const register = () => {
+    const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
     fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })
       .then(response => response.json())
       .then(result =>
@@ -49,7 +53,7 @@ const Register: React.FC = () => {
           body: JSON.stringify({
             action: "registration",
             email: email,
-            password: password,
+            password: passwordHash,
             public_key: result.public,
             private_key: result.private,
             address: result.address,
