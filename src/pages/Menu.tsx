@@ -6,6 +6,7 @@ import {
   IonIcon,
   IonCard,
   IonCardContent,
+  IonText,
 } from "@ionic/react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -18,7 +19,7 @@ const Menu: React.FC = () => {
   const location = useLocation<{ email: string, public_key: string, private_key: string, address: string, wif: string }>();
   const [balance, setBalance] = useState([-1, 0]); // 0(BTC), 1(EUR)
   const [EURChange, setEURChange] = useState(1);
-  const [transactions, setTransactions] = useState(['1', '2']);
+  const [transactions, setTransactions] = useState<string[] | []>([]);
 
   const fetchBalance = useCallback(async () => {
     //const data = await (await fetch('https://api.blockcypher.com/v1/btc/test3/addrs/' + location.state.address + '/balance')).json()
@@ -31,8 +32,22 @@ const Menu: React.FC = () => {
     setEURChange(data.bitcoin.eur)
   }, [])
   const fetchTransactions = useCallback(async () => {
-    const addTransactions = ['3', '4','5','6','7'];
-    addTransactions.map(transaction => setTransactions(prevArray => [...prevArray, transaction]))
+    const data = await (await
+      fetch('http://cryptokeeper.altervista.org/APP/webhook.php', {
+        method: "POST",
+        body: JSON.stringify({
+          action: "getTransactions",
+          email: location.state.email
+        }),
+      })).text()
+    let splittedData = data.split(',');
+    if (splittedData[0] === "True") {
+      for (let i = 1; i < splittedData.length - 1; i++) {
+        setTransactions(prevArray => [...prevArray, splittedData[i]])
+      }
+    }
+    //const data = ['3', '4', '5', '6', '7'];
+    //data.map(transaction => setTransactions(prevArray => [...prevArray, transaction]))
   }, [])
 
   useEffect(() => {
@@ -83,10 +98,14 @@ const Menu: React.FC = () => {
           <p className="text-balance3">Transactions</p>
           <IonContent>
             {transactions.map(transaction => {
+              let splittedTransaction = transaction.split(';')
               return (
-                <IonCard key={transaction}>
+                <IonCard key={splittedTransaction[0]}>
                   <IonCardContent>
-                    {transaction}
+                    {splittedTransaction[1]}
+                    <IonText>              value= </IonText>
+                    {splittedTransaction[2]}
+                    <IonText>  BTC</IonText>
                   </IonCardContent>
                 </IonCard>
               )
