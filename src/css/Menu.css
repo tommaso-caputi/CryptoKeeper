@@ -1,0 +1,24 @@
+.text-balance1 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.1em;
+    color: #878787;
+}
+
+.text-balance2 {
+    margin: 0;
+    padding: 0;
+    font-size: 2em;
+}
+
+.text-balance3 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.3em;
+    color: #878787;
+}
+
+.prova{
+  --padding-start: 10px;
+  --padding-end: 10px;
+}
