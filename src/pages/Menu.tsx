@@ -28,7 +28,7 @@ const Menu: React.FC = () => {
     //const data = await (await fetch('https://api.blockcypher.com/v1/btc/test3/addrs/' + location.state.address + '/balance')).json()
     const data = { balance: 3694203 }
     setBalance([data.balance / 100000000, balance[1]])
-  },[])
+  }, [])
   const fetchEURChange = useCallback(async () => {
     //const data = await (await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur')).json()
     const data = { bitcoin: { eur: 25452.131871208 } }
@@ -69,7 +69,6 @@ const Menu: React.FC = () => {
     } else {
       setBalance([balance[0], 0])
     }
-    console.log(dataEmail)
   }
 
   return (
