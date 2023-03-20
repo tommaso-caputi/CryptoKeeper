@@ -31,13 +31,13 @@ const Login: React.FC = () => {
       response.text().then((response) => {
         let data = response.split(".");
         console.log(data)
-        if (data[5] === "True") {
-          if (data[4] === "1") {
+        if (data[2] === "True") {
+          if (data[1] === "1") {
             presentAlert({
               header: "Success",
               message: "Logged successfully"
             });
-            history.push("/Menu", { email: email, public_key: data[0], private_key: data[1], address: data[2], wif: data[3] });
+            history.push("/Menu", { email: email });
           } else {
             presentAlert({
               header: "Failed",

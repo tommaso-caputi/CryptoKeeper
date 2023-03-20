@@ -6,8 +6,9 @@ import {
   useIonAlert,
 } from "@ionic/react";
 import { createBrowserHistory } from "history";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import sha256 from "fast-sha256";
+import { addJsonToJson } from '../data/IonicStorage';
 
 const history = createBrowserHistory({ forceRefresh: true });
 
@@ -28,7 +29,7 @@ const Register: React.FC = () => {
       }).then((response) => {
         response.text().then((response) => {
           if (response !== "True") {
-            register();
+            reg(email, password);
           } else {
             presentAlert({
               header: "Failed",
@@ -41,52 +42,43 @@ const Register: React.FC = () => {
     }
   };
 
-  const register = () => {
+  const reg = useCallback(async (email: string, password: string) => {
     const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
       .map(b => b.toString(16).padStart(2, '0'))
       .join('')
-    console.log(passwordHash)
-    fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })
-      .then(response => response.json())
-      .then(result => (
-        fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
-          method: "POST",
-          body: JSON.stringify({
-            action: "registration",
-            email: email,
-            password: passwordHash,
-            public_key: result.public,
-            private_key: result.private,
-            address: result.address,
-            wif: result.wif
-          }),
-        }).then((response) => {
-          response.text().then((response) => {
-            if (response === "Success") {
-              fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
-                method: "POST",
-                body: JSON.stringify({
-                  action: "sendConfirmEmail",
-                  email: email
-                }),
-              })
-              presentAlert({
-                header: "Success",
-                message: "Address created: " + result.address,
-                subHeader: "Account successfully created, check email for confirm",
-                buttons: [{
-                  text: 'OK',
-                  handler: () => {
-                    history.push("/login");
-                  },
-                },]
-              });
-            }
-          });
-        })
-      ))
-      .catch(error => console.log('error', error));
-  };
+    const resultDataAddress = await (await fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })).json()
+    const resultRegistration = await (await fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+      method: "POST",
+      body: JSON.stringify({
+        action: "registration",
+        email: email,
+        password: passwordHash,
+        address: resultDataAddress.address,
+      }),
+    })).text()
+    if (resultRegistration === "Success") {
+      fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+        method: "POST",
+        body: JSON.stringify({
+          action: "sendConfirmEmail",
+          email: email
+        }),
+      })
+      let json = { 'address': resultDataAddress.address, 'public_key': resultDataAddress.public, 'private_key': resultDataAddress.private, 'wif': resultDataAddress.wif };
+      await addJsonToJson('wallets', email, json);
+      presentAlert({
+        header: "Success",
+        message: "Address created: " + resultDataAddress.address,
+        subHeader: "Account successfully created, check email for confirm",
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            history.push("/login");
+          },
+        },]
+      });
+    }
+  }, [])
 
   const checkPassword = () => {
     if (password.length > 0) {
