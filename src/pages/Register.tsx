@@ -68,19 +68,16 @@ const Register: React.FC = () => {
       await addJsonToJson('wallets', email, json);
       presentAlert({
         header: "Success",
-        message: "Address created: " + resultDataAddress.address,
-        subHeader: "Account successfully created, check email for confirm",
+        subHeader: "Account successfully created",
         buttons: [{
-          text: 'OK',
-          handler: () => {
-            history.push("/remember", {
-              private_key: resultDataAddress.private,
-              public_key: resultDataAddress.public,
-              address: resultDataAddress.address,
-              wif: resultDataAddress.wif
-            });
-          },
+          text: 'OK'
         },]
+      });
+      history.push("/remember", {
+        private_key: resultDataAddress.private,
+        public_key: resultDataAddress.public,
+        address: resultDataAddress.address,
+        wif: resultDataAddress.wif
       });
     }
   }, [presentAlert])

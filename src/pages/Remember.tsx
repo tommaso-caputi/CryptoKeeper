@@ -29,6 +29,8 @@ const Remember: React.FC = () => {
                     You should save this data, because CryptoKeeper do not save them(privacy terms)
                     <br />
                     No do not share them to other people except for the address
+                    <br />
+                    <h1 style={{ fontSize: 23 }}>Check email for confirm</h1>
                 </div>
                 <div style={{ paddingTop: "20px", textAlign: "center" }}>
                     <IonButton
