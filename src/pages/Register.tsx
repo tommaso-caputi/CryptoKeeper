@@ -78,7 +78,7 @@ const Register: React.FC = () => {
         },]
       });
     }
-  }, [])
+  }, [presentAlert])
 
   const checkPassword = () => {
     if (password.length > 0) {
