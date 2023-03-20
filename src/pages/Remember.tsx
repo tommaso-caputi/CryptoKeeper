@@ -17,12 +17,12 @@ const Remember: React.FC = () => {
                     <h1 style={{ fontSize: 40 }}>
                         Save this data<br />
                     </h1>
-                    <h1 style={{ fontSize: 25 }}>
+                    <p style={{ fontSize: 25 }}>
                         Address: <h1 style={{ fontSize: 25, color: '#32a852' }}>{location.state.address}</h1><br />
                         Public key: <h1 style={{ fontSize: 25, color: '#32a852' }}>{location.state.public_key}</h1><br />
                         Private key: <h1 style={{ fontSize: 25, color: '#32a852' }}>{location.state.private_key}</h1><br />
                         Wif: <h1 style={{ fontSize: 25, color: '#32a852' }}>{location.state.wif}</h1><br />
-                    </h1>
+                    </p>
                 </div>
                 <div>
                     <br /><br />
