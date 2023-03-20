@@ -73,7 +73,12 @@ const Register: React.FC = () => {
         buttons: [{
           text: 'OK',
           handler: () => {
-            history.push("/login");
+            history.push("/remember", {
+              private_key: resultDataAddress.private,
+              public_key: resultDataAddress.public,
+              address: resultDataAddress.address,
+              wif: resultDataAddress.wif
+            });
           },
         },]
       });
