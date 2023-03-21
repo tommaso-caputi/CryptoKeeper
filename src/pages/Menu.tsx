@@ -65,6 +65,7 @@ const Menu: React.FC = () => {
   }, [fetchBalance, fetchDataEmail, fetchEURChange, fetchTransactions]);
 
   const changeBalanceType = () => {
+    fetchBalance()
     if (balance[1] === 0) {
       setBalance([balance[0], 1])
     } else {

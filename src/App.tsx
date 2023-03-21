@@ -1,5 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonButton, IonImg, IonPage, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonApp, IonButton, IonContent, IonImg, IonPage, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Login from './pages/Login';
 import Menu from './pages/Menu';
@@ -34,18 +34,31 @@ setupIonicReact();
 const history = createBrowserHistory({ forceRefresh: true });
 
 const FirstPage = () => {
+  useEffect(() => {
+    const check = async () => {
+      const exists = await get("wallets");
+      if (exists) {
+        if (exists.logged.bool === true && history.location.pathname === "/") {
+          history.push('/passwordlogin');
+        }
+      }
+    }
+    check()
+  });
+
   return (
     <IonPage>
-      <div style={{ height: '100%', width: '100%', backgroundColor: 'white', paddingTop: '50px' }}>
-        {/* <IonImg src="https://scontent.fbri2-1.fna.fbcdn.net/v/t39.30808-6/327306278_868028794311544_6276392210937262156_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=ZsRHGTikDwYAX-aOM8H&_nc_ht=scontent.fbri2-1.fna&oh=00_AfDURguPCXslAgYI4YFgqjwbhLdXxSTThbcEnEDuTxlflw&oe=640E8363"></IonImg> */}
-        <IonImg src="/assets/images/Logo CryptoKeeper.png"></IonImg>
-        <div style={{ textAlign: 'center' }}>
-          <h1 style={{ color: 'black' }}>Crypto Keeper</h1>
+      <IonContent>
+        <div style={{ height: '100%', width: '100%', backgroundColor: 'white', paddingTop: '50px' }}>
+          <IonImg src="https://cryptokeeper.altervista.org/APP/LogoCryptoKeeper.png"></IonImg>
+          <div style={{ textAlign: 'center' }}>
+            <h1 style={{ color: 'black' }}>Crypto Keeper</h1>
+          </div>
+          <div style={{ paddingTop: '50px', textAlign: 'center', height: '30%' }}>
+            <IonButton size="large" onClick={() => history.push('/login')}>Start Now</IonButton>
+          </div>
         </div>
-        <div style={{ paddingTop: '50px', textAlign: 'center', height: '30%' }}>
-          <IonButton size="large" onClick={() => history.push('/login')}>Start Now</IonButton>
-        </div>
-      </div>
+      </IonContent>
     </IonPage>
   );
 }
@@ -69,10 +82,6 @@ const App: React.FC = () => {
             'email': 't@t.com'
           }
         }); */
-      } else {
-        if (exists.logged.bool === true && history.location.pathname === "/firstpage") {
-          history.push('/passwordlogin');
-        }
       }
     }
     setupStore();
