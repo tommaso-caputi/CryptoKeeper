@@ -1,5 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonButton, IonContent, IonImg, IonLabel, IonPage, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonApp, IonButton, IonContent, IonImg, IonPage, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Login from './pages/Login';
 import Menu from './pages/Menu';
@@ -28,7 +28,7 @@ import './theme/variables.css';
 import './css/App.css'
 
 import { createStore, set, get } from './data/IonicStorage';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 setupIonicReact();
 const history = createBrowserHistory({ forceRefresh: true });
