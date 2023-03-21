@@ -2,10 +2,11 @@ import {
     IonPage,
     IonButton,
     IonContent,
-    IonItem,
     IonLabel,
-    IonInput
+    IonInput,
+    useIonAlert
 } from "@ionic/react";
+import sha256 from "fast-sha256";
 import { createBrowserHistory } from "history";
 import { useCallback, useState } from "react";
 import { useLocation } from "react-router";
@@ -14,7 +15,7 @@ import { addJsonToJson } from '../data/IonicStorage';
 const history = createBrowserHistory({ forceRefresh: true });
 
 const Import: React.FC = () => {
-    const location = useLocation<{ private_key: string, public_key: string, address: string, wif: string }>();
+    const [presentAlert] = useIonAlert();
     const [wif, setWif] = useState("");
     const [address, setAddress] = useState("");
     const [public_key, setPublicKey] = useState("");
@@ -23,9 +24,99 @@ const Import: React.FC = () => {
     const [confirmpassword, setConfirmPassword] = useState("");
     const [email, setEmail] = useState("");
 
-    const add = useCallback(async () => {
+    const registration = async () => {
+        if (checkPassword() && checkEmail()) {
+            fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+                method: "POST",
+                body: JSON.stringify({
+                    action: "checkUserEmail",
+                    email: email,
+                }),
+            }).then((response) => {
+                response.text().then((response) => {
+                    if (response !== "True") {
+                        reg(email, password, address, public_key, private_key, wif);
+                    } else {
+                        presentAlert({
+                            header: "Failed",
+                            message: "This email has already an account",
+                            buttons: ["OK"],
+                        });
+                    }
+                });
+            });
+        }
+    };
 
-    }, [])
+    const reg = useCallback(async (email: string, password: string, address: string, public_key: string, private_key: string, wif: string) => {
+        const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('')
+        const resultRegistration = await (await fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+            method: "POST",
+            body: JSON.stringify({
+                action: "registration",
+                email: email,
+                password: passwordHash,
+                address: address,
+            }),
+        })).text()
+        if (resultRegistration === "Success") {
+            fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+                method: "POST",
+                body: JSON.stringify({
+                    action: "sendConfirmEmail",
+                    email: email
+                }),
+            })
+            let json = { 'address': address, 'public_key': public_key, 'private_key': private_key, 'wif': wif };
+            await addJsonToJson('wallets', email, json);
+            presentAlert({
+                header: "Success",
+                message: "Account successfully created",
+                buttons: ["OK"],
+            });
+            history.push("/remember", {
+                private_key: private_key,
+                public_key: public_key,
+                address: address,
+                wif: wif
+            });
+        }
+    }, [presentAlert])
+
+    const checkPassword = () => {
+        if (password.length > 0) {
+            if (password !== confirmpassword) {
+                presentAlert({
+                    header: "Alert",
+                    message: "Passwords are differents",
+                    buttons: ["OK"],
+                });
+            } else {
+                return true;
+            }
+        } else {
+            presentAlert({
+                header: "Alert",
+                message: "Password too short",
+                buttons: ["OK"],
+            });
+        }
+    };
+
+    const checkEmail = () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            presentAlert({
+                header: "Alert",
+                message: "Email is not valid",
+                buttons: ["OK"],
+            });
+        } else {
+            return true;
+        }
+    };
 
     return (
         <IonPage>
@@ -67,6 +158,7 @@ const Import: React.FC = () => {
                             placeholder="Enter password"
                         ></IonInput>
                     </div>
+                    <br />
                     <div style={{ paddingTop: "10px" }}>
                         <IonLabel position="stacked">Address</IonLabel>
                         <IonInput
@@ -97,9 +189,9 @@ const Import: React.FC = () => {
                         ></IonInput>
                     </div>
 
-                    
+
                     <div style={{ paddingTop: "50px" }}>
-                        <IonButton onClick={add} size="large" expand="block">
+                        <IonButton onClick={registration} size="large" expand="block">
                             Import
                         </IonButton>
                     </div>
