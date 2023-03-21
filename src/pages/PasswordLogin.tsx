@@ -6,14 +6,24 @@ import {
     useIonAlert,
 } from "@ionic/react";
 import { createBrowserHistory } from "history";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import sha256 from "fast-sha256";
+import { getJsonOfJson, setJsonOfJson } from '../data/IonicStorage';
 
 const history = createBrowserHistory({ forceRefresh: true });
 
-const Login: React.FC = () => {
+const PasswordLogin: React.FC = () => {
     const [password, setPassword] = useState("");
     const [presentAlert] = useIonAlert();
+    const [email, setEmail] = useState({ email: 'email' });
+
+    const fetchEmail = useCallback(async () => {
+        let data = await getJsonOfJson('wallets', 'logged')
+        setEmail(data.email);
+    }, [])
+    useEffect(() => {
+        fetchEmail()
+    }, [fetchEmail]);
 
     const login = () => {
         const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
@@ -29,7 +39,6 @@ const Login: React.FC = () => {
         }).then((response) => {
             response.text().then((response) => {
                 let data = response.split(".");
-                console.log(data)
                 if (data[2] === "True") {
                     if (data[1] === "1") {
                         presentAlert({
@@ -47,7 +56,7 @@ const Login: React.FC = () => {
                 } else {
                     presentAlert({
                         header: "Failed",
-                        message: "Email or password are incorrect",
+                        message: "Password are incorrect",
                         buttons: ["OK"],
                     });
                 }
@@ -94,10 +103,11 @@ const Login: React.FC = () => {
                         size="default"
                         expand="block"
                         onClick={() => {
-                            history.push("/register");
+                            setJsonOfJson('wallets', 'logged', { bool: false, email: "" })
+                            history.push("/login");
                         }}
                     >
-                        Sign Up
+                        Log out
                     </IonButton>
                 </div>
             </div>
@@ -105,4 +115,4 @@ const Login: React.FC = () => {
     );
 };
 
-export default Login;
+export default PasswordLogin;

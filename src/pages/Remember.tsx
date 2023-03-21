@@ -5,17 +5,17 @@ import {
 } from "@ionic/react";
 import { createBrowserHistory } from "history";
 import { useLocation } from "react-router";
+import { setJsonOfJson } from "../data/IonicStorage";
 
 const history = createBrowserHistory({ forceRefresh: true });
 
 const Remember: React.FC = () => {
-    const location = useLocation<{ private_key: string, public_key: string, address: string, wif: string }>();
+    const location = useLocation<{ private_key: string, public_key: string, address: string, wif: string, email: string }>();
     return (
         <IonPage>
             <IonContent>
                 <div style={{
                     padding: "20px",
-                    height: "100%",
                     width: "100%",
                     display: "flex",
                     flexDirection: "column",
@@ -47,7 +47,8 @@ const Remember: React.FC = () => {
                             size="default"
                             expand="block"
                             onClick={() => {
-                                history.push("/login");
+                                setJsonOfJson('wallets', 'logged', { bool: true, email: location.state.email })
+                                history.push("/passwordlogin");
                             }}
                         >
                             Log In

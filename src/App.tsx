@@ -6,6 +6,8 @@ import Menu from './pages/Menu';
 import Register from './pages/Register';
 import Remember from './pages/Remember';
 import Import from './pages/Import';
+import PasswordLogin from './pages/PasswordLogin';
+
 import { createBrowserHistory } from "history";
 
 import '@ionic/react/css/core.css';
@@ -48,16 +50,14 @@ const FirstPage = () => {
   );
 }
 
-
-
 const App: React.FC = () => {
   useEffect(() => {
     const setupStore = async () => {
       await createStore();
       const exists = await get("wallets");
       if (!exists) {
-        //await set("wallets", {});
-        await set("wallets", {
+        await set("wallets", { logged: { 'bool': false, 'email': '' } });
+        /* await set("wallets", {
           't@t.com': {
             'address': 'mtWyWxCmVjay1jkZedHfM9SPqA2SaGXgnc',
             'wif': 'cMvWu5rZjbiCdfHE7U6RszhV8rvyVZk1YUu64AZ5efpxoWow1KsW',
@@ -65,13 +65,13 @@ const App: React.FC = () => {
             'private_key': '0a318361d63ba7eec141bc62552f5678f4a3b43e4cac4628a7bb10f49e6e5a68'
           },
           'logged': {
-            'bool': false,
-            'address': ''
+            'bool': true,
+            'email': 't@t.com'
           }
-        });
+        }); */
       } else {
-        if (exists.logged.bool === true) {
-          //history.push('/passwordlogin');
+        if (exists.logged.bool === true && history.location.pathname === "/firstpage") {
+          history.push('/passwordlogin');
         }
       }
     }
@@ -95,6 +95,9 @@ const App: React.FC = () => {
           </Route>
           <Route exact path="/remember">
             <Remember />
+          </Route>
+          <Route exact path="/passwordlogin">
+            <PasswordLogin />
           </Route>
           <Route exact path="/import">
             <Import />

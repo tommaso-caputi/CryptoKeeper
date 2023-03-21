@@ -77,7 +77,8 @@ const Register: React.FC = () => {
         private_key: resultDataAddress.private,
         public_key: resultDataAddress.public,
         address: resultDataAddress.address,
-        wif: resultDataAddress.wif
+        wif: resultDataAddress.wif,
+        email: email,
       });
     }
   }, [presentAlert])

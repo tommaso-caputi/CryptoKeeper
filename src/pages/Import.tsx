@@ -80,7 +80,8 @@ const Import: React.FC = () => {
                 private_key: private_key,
                 public_key: public_key,
                 address: address,
-                wif: wif
+                wif: wif,
+                email: email,
             });
         }
     }, [presentAlert])
