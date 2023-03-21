@@ -69,6 +69,10 @@ const App: React.FC = () => {
             'address': ''
           }
         });
+      } else {
+        if (exists.logged.bool === true) {
+          //history.push('/passwordlogin');
+        }
       }
     }
     setupStore();
