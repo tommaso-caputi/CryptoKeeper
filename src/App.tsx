@@ -34,6 +34,7 @@ setupIonicReact();
 const history = createBrowserHistory({ forceRefresh: true });
 
 const FirstPage = () => {
+
   useEffect(() => {
     const check = async () => {
       const exists = await get("wallets");
@@ -45,6 +46,7 @@ const FirstPage = () => {
     }
     check()
   });
+
   return (
     <IonPage>
       <div style={{ height: '100%', width: '100%', backgroundColor: 'white', paddingTop: '50px' }}>

@@ -56,7 +56,7 @@ const PasswordLogin: React.FC = () => {
                 } else {
                     presentAlert({
                         header: "Failed",
-                        message: "Password are incorrect",
+                        message: "Password is incorrect",
                         buttons: ["OK"],
                     });
                 }
