@@ -102,8 +102,8 @@ const PasswordLogin: React.FC = () => {
                     <IonButton
                         size="default"
                         expand="block"
-                        onClick={() => {
-                            setJsonOfJson('wallets', 'logged', { bool: false, email: "" })
+                        onClick={async () => {
+                            await setJsonOfJson('wallets', 'logged', { bool: false, email: "" })
                             history.push("/login");
                         }}
                     >

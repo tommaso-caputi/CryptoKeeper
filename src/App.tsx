@@ -1,5 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonButton, IonImg, IonPage, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonApp, IonButton, IonContent, IonImg, IonLabel, IonPage, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Login from './pages/Login';
 import Menu from './pages/Menu';
@@ -28,13 +28,12 @@ import './theme/variables.css';
 import './css/App.css'
 
 import { createStore, set, get } from './data/IonicStorage';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 setupIonicReact();
 const history = createBrowserHistory({ forceRefresh: true });
 
 const FirstPage = () => {
-
   useEffect(() => {
     const check = async () => {
       const exists = await get("wallets");
@@ -49,15 +48,17 @@ const FirstPage = () => {
 
   return (
     <IonPage>
-      <div style={{ height: '100%', width: '100%', backgroundColor: 'white', paddingTop: '50px' }}>
-        <IonImg src="https://cryptokeeper.altervista.org/APP/LogoCryptoKeeper.png"></IonImg>
-        <div style={{ textAlign: 'center' }}>
-          <h1 style={{ color: 'black' }}>Crypto Keeper</h1>
+      <IonContent>
+        <div style={{ height: '100%', width: '100%', backgroundColor: 'white', paddingTop: '50px' }}>
+          <IonImg src="https://cryptokeeper.altervista.org/APP/LogoCryptoKeeper.png"></IonImg>
+          <div style={{ textAlign: 'center' }}>
+            <h1 style={{ color: 'black' }}>Crypto Keeper</h1>
+          </div>
+          <div style={{ paddingTop: '50px', textAlign: 'center', height: '30%' }}>
+            <IonButton size="large" onClick={() => history.push('/login')}>Start Now</IonButton>
+          </div>
         </div>
-        <div style={{ paddingTop: '50px', textAlign: 'center', height: '30%' }}>
-          <IonButton size="large" onClick={() => history.push('/login')}>Start Now</IonButton>
-        </div>
-      </div>
+      </IonContent>
     </IonPage>
   );
 }
