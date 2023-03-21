@@ -37,6 +37,12 @@ export const getJsonOfJson = async (key, id) => {
     return all[id];
 }
 
+export const setJsonOfJson = async (key, id, value) => {
+    let all = await storage.get(key);
+    all[id] = value
+    set('wallets', all)
+    //return all[id];
+}
 
 export const addJsonToJson = async (key, id, js) => {
     let all = await storage.get(key);

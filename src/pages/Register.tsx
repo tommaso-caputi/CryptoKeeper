@@ -77,7 +77,8 @@ const Register: React.FC = () => {
         private_key: resultDataAddress.private,
         public_key: resultDataAddress.public,
         address: resultDataAddress.address,
-        wif: resultDataAddress.wif
+        wif: resultDataAddress.wif,
+        email: email,
       });
     }
   }, [presentAlert])
@@ -138,7 +139,6 @@ const Register: React.FC = () => {
           <IonLabel position="stacked">Email Address</IonLabel>
           <IonInput
             onIonInput={(e: any) => setEmail(e.target.value)}
-            clearOnEdit={true}
             placeholder="Enter email"
             type="email"
           ></IonInput>
@@ -147,7 +147,6 @@ const Register: React.FC = () => {
           <IonLabel position="stacked">Password</IonLabel>
           <IonInput
             onIonInput={(e: any) => setPassword(e.target.value)}
-            clearOnEdit={true}
             placeholder="Enter password"
           ></IonInput>
         </div>
@@ -155,7 +154,6 @@ const Register: React.FC = () => {
           <IonLabel position="stacked">Confirm Password</IonLabel>
           <IonInput
             onIonInput={(e: any) => setConfirmPassword(e.target.value)}
-            clearOnEdit={true}
             placeholder="Enter password"
           ></IonInput>
         </div>
@@ -167,7 +165,12 @@ const Register: React.FC = () => {
         <div style={{ paddingTop: "20px", textAlign: "center" }}>
           <IonLabel>or</IonLabel>
         </div>
-        <div style={{ paddingTop: "20px", textAlign: "center" }}>
+        <div style={{ paddingTop: "20px" }}>
+          <IonButton onClick={() => { history.push('/import') }} expand="block">
+            Import address
+          </IonButton>
+        </div>
+        <div style={{ paddingTop: "0px", textAlign: "center" }}>
           <IonButton
             size="default"
             expand="block"

@@ -8,6 +8,7 @@ import {
 import { createBrowserHistory } from "history";
 import { useState } from "react";
 import sha256 from "fast-sha256";
+import { setJsonOfJson } from "../data/IonicStorage";
 
 const history = createBrowserHistory({ forceRefresh: true });
 
@@ -30,13 +31,13 @@ const Login: React.FC = () => {
     }).then((response) => {
       response.text().then((response) => {
         let data = response.split(".");
-        console.log(data)
         if (data[2] === "True") {
           if (data[1] === "1") {
             presentAlert({
               header: "Success",
               message: "Logged successfully"
             });
+            setJsonOfJson('wallets', 'logged', { bool: true, email: email })
             history.push("/Menu", { email: email });
           } else {
             presentAlert({
@@ -79,7 +80,6 @@ const Login: React.FC = () => {
           <IonLabel position="stacked">Email Address</IonLabel>
           <IonInput
             onIonInput={(e: any) => setEmail(e.target.value)}
-            clearOnEdit={true}
             placeholder="Enter email"
           ></IonInput>
         </div>
@@ -87,7 +87,6 @@ const Login: React.FC = () => {
           <IonLabel position="stacked">Password</IonLabel>
           <IonInput
             onIonInput={(e: any) => setPassword(e.target.value)}
-            clearOnEdit={true}
             placeholder="Enter password"
           ></IonInput>
         </div>
