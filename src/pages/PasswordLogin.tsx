@@ -4,12 +4,14 @@ import {
     IonInput,
     IonLabel,
     useIonAlert,
+    setupIonicReact,
 } from "@ionic/react";
 import { createBrowserHistory } from "history";
 import { useCallback, useEffect, useState } from "react";
 import sha256 from "fast-sha256";
 
 const history = createBrowserHistory({ forceRefresh: true });
+setupIonicReact();
 
 const PasswordLogin: React.FC = () => {
     const [password, setPassword] = useState("");
@@ -44,7 +46,7 @@ const PasswordLogin: React.FC = () => {
                             header: "Success",
                             message: "Logged successfully"
                         });
-                        history.push("/Menu", { email: email });
+                        history.push("/mainMenu", { email: email });
                     } else {
                         presentAlert({
                             header: "Failed",

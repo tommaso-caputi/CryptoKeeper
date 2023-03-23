@@ -7,6 +7,8 @@ import Register from './pages/Register';
 import Remember from './pages/Remember';
 import Import from './pages/Import';
 import PasswordLogin from './pages/PasswordLogin';
+import MainMenu from './pages/mainMenu';
+
 
 import { createBrowserHistory } from "history";
 
@@ -106,6 +108,9 @@ const App: React.FC = () => {
           </Route>
           <Route exact path="/import">
             <Import />
+          </Route>
+          <Route exact path="/mainMenu">
+            <MainMenu />
           </Route>
           <Route exact path="/">
             <Redirect to="/firstpage" />

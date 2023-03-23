@@ -40,7 +40,7 @@ const Login: React.FC = () => {
               });
               d['logged'] = { bool: true, email: email }
               localStorage.setItem('wallets', JSON.stringify(d))
-              history.push("/Menu", { email: email });
+              history.push("/mainMenu", { email: email });
             } else {
               presentAlert({
                 header: "Failed",
