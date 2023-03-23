@@ -65,8 +65,8 @@ const App: React.FC = () => {
     const setupLocalStore = async () => {
       const exists = localStorage.getItem('wallets')
       if (!exists) {
-        //localStorage.setItem('wallets', JSON.stringify({ logged: { 'bool': false, 'email': '' } }))
-        localStorage.setItem("wallets", JSON.stringify({
+        localStorage.setItem('wallets', JSON.stringify({ logged: { 'bool': false, 'email': '' } }))
+        /* localStorage.setItem("wallets", JSON.stringify({
           't@t.com': {
             'address': 'mtWyWxCmVjay1jkZedHfM9SPqA2SaGXgnc',
             'wif': 'cMvWu5rZjbiCdfHE7U6RszhV8rvyVZk1YUu64AZ5efpxoWow1KsW',
@@ -77,7 +77,7 @@ const App: React.FC = () => {
             'bool': true,
             'email': 't@t.com'
           }
-        }));
+        })); */
       }
     }
     setupLocalStore();

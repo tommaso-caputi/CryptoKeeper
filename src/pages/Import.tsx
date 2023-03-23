@@ -10,7 +10,6 @@ import sha256 from "fast-sha256";
 import { createBrowserHistory } from "history";
 import { useCallback, useState } from "react";
 import { useLocation } from "react-router";
-import { addJsonToJson } from '../data/IonicStorage';
 
 const history = createBrowserHistory({ forceRefresh: true });
 
@@ -70,7 +69,9 @@ const Import: React.FC = () => {
                 }),
             })
             let json = { 'address': address, 'public_key': public_key, 'private_key': private_key, 'wif': wif };
-            await addJsonToJson('wallets', email, json);
+            let d = JSON.parse(localStorage.getItem('wallets')!)
+            d[email] = json
+            localStorage.setItem('wallets', d)
             presentAlert({
                 header: "Success",
                 message: "Account successfully created",
