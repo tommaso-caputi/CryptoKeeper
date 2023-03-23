@@ -5,7 +5,6 @@ import {
 } from "@ionic/react";
 import { createBrowserHistory } from "history";
 import { useLocation } from "react-router";
-import { setJsonOfJson } from "../data/IonicStorage";
 
 const history = createBrowserHistory({ forceRefresh: true });
 
@@ -36,7 +35,7 @@ const Remember: React.FC = () => {
                     </div>
                     <br /><br />
                     <div>
-                        You should save this data, because CryptoKeeper do not save them(privacy terms)
+                        You should save this data, because CryptoKeeper do not saves them(privacy terms)
                         <br />
                         No do not share them to other people except for the address and public key
                         <br />
@@ -47,7 +46,9 @@ const Remember: React.FC = () => {
                             size="default"
                             expand="block"
                             onClick={() => {
-                                setJsonOfJson('wallets', 'logged', { bool: true, email: location.state.email })
+                                let d = JSON.parse(localStorage.getItem('wallets')!)
+                                d['logged'] = { bool: true, email: location.state.email }
+                                localStorage.setItem('wallets', JSON.stringify(d))
                                 history.push("/passwordlogin");
                             }}
                         >

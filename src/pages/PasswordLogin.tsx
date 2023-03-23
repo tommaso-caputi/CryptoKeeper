@@ -8,7 +8,6 @@ import {
 import { createBrowserHistory } from "history";
 import { useCallback, useEffect, useState } from "react";
 import sha256 from "fast-sha256";
-import { getJsonOfJson, setJsonOfJson } from '../data/IonicStorage';
 
 const history = createBrowserHistory({ forceRefresh: true });
 
@@ -18,8 +17,8 @@ const PasswordLogin: React.FC = () => {
     const [email, setEmail] = useState({ email: 'email' });
 
     const fetchEmail = useCallback(async () => {
-        let data = await getJsonOfJson('wallets', 'logged')
-        setEmail(data.email);
+        let data = JSON.parse(localStorage.getItem('wallets')!)
+        setEmail(data.logged.email);
     }, [])
     useEffect(() => {
         fetchEmail()
@@ -103,7 +102,9 @@ const PasswordLogin: React.FC = () => {
                         size="default"
                         expand="block"
                         onClick={async () => {
-                            await setJsonOfJson('wallets', 'logged', { bool: false, email: "" })
+                            let d = JSON.parse(localStorage.getItem('wallets')!)
+                            d['logged'] = { bool: false, email: "" }
+                            localStorage.setItem('wallets', JSON.stringify(d))
                             history.push("/login");
                         }}
                     >
