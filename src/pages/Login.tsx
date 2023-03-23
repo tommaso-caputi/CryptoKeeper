@@ -30,7 +30,8 @@ const Login: React.FC = () => {
     }).then((response) => {
       response.text().then(async (response) => {
         let data = response.split(".");
-        if (data[2] === "True") {
+        console.log(data)
+        if (data[3] === "True") {
           if (data[1] === "1") {
             let d = JSON.parse(localStorage.getItem('wallets')!)
             if (d[email] !== undefined) { //check if wallet should be imported
@@ -40,7 +41,7 @@ const Login: React.FC = () => {
               });
               d['logged'] = { bool: true, email: email }
               localStorage.setItem('wallets', JSON.stringify(d))
-              history.push("/Menu", { email: email });
+              history.push("/mainMenu", { email: email });
             } else {
               presentAlert({
                 header: "Failed",
