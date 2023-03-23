@@ -12,7 +12,6 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { arrowForwardOutline, arrowBackOutline } from 'ionicons/icons';
-import { getJson, getJsonOfJson } from '../data/IonicStorage';
 
 import '../css/Menu.css';
 setupIonicReact();
@@ -25,7 +24,7 @@ const Menu: React.FC = () => {
   const [transactions, setTransactions] = useState<string[] | []>([]);
 
   const fetchBalance = useCallback(async () => {
-    let d = await getJson('wallets')
+    let d = JSON.parse(localStorage.getItem('wallets')!)
     const data = await (await fetch('https://api.blockcypher.com/v1/btc/test3/addrs/' + d[d.logged.email].address + '/balance')).json()
     //const data = { balance: 3694203 }
     setBalance([data.balance / 100000000, balance[1]])
@@ -54,7 +53,8 @@ const Menu: React.FC = () => {
     //data.map(transaction => setTransactions(prevArray => [...prevArray, transaction]))
   }, [location.state.email])
   const fetchDataEmail = useCallback(async () => {
-    setDataEmail(await getJsonOfJson('wallets', location.state.email));
+    let d = JSON.parse(localStorage.getItem('wallets')!)
+    setDataEmail(d[location.state.email]);
   }, [location.state.email])
 
   useEffect(() => {

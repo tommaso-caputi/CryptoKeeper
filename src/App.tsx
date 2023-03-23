@@ -27,7 +27,6 @@ import './theme/variables.css';
 
 import './css/App.css'
 
-import { createStore, set, get } from './data/IonicStorage';
 import { useEffect } from 'react';
 
 setupIonicReact();
@@ -36,15 +35,13 @@ const history = createBrowserHistory({ forceRefresh: true });
 const FirstPage = () => {
   useEffect(() => {
     const check = async () => {
-      const exists = await get("wallets");
-      if (exists) {
-        if (exists.logged.bool === true && history.location.pathname === "/") {
-          history.push('/passwordlogin');
-        }
+      let wallets = JSON.parse(localStorage.getItem('wallets')!)
+      if (wallets.logged.bool === true && history.location.pathname === "/") {
+        history.push('/passwordlogin');
       }
     }
     check()
-  });
+  }, []);
 
   return (
     <IonPage>
@@ -65,12 +62,11 @@ const FirstPage = () => {
 
 const App: React.FC = () => {
   useEffect(() => {
-    const setupStore = async () => {
-      await createStore();
-      const exists = await get("wallets");
+    const setupLocalStore = async () => {
+      const exists = localStorage.getItem('wallets')
       if (!exists) {
-        await set("wallets", { logged: { 'bool': false, 'email': '' } });
-        /* await set("wallets", {
+        localStorage.setItem('wallets', JSON.stringify({ logged: { 'bool': false, 'email': '' } }))
+        /* localStorage.setItem("wallets", JSON.stringify({
           't@t.com': {
             'address': 'mtWyWxCmVjay1jkZedHfM9SPqA2SaGXgnc',
             'wif': 'cMvWu5rZjbiCdfHE7U6RszhV8rvyVZk1YUu64AZ5efpxoWow1KsW',
@@ -81,10 +77,10 @@ const App: React.FC = () => {
             'bool': true,
             'email': 't@t.com'
           }
-        }); */
+        })); */
       }
     }
-    setupStore();
+    setupLocalStore();
   }, []);
   return (
     <IonApp>

@@ -8,7 +8,6 @@ import {
 import { createBrowserHistory } from "history";
 import { useState } from "react";
 import sha256 from "fast-sha256";
-import { getJson, setJsonOfJson } from "../data/IonicStorage";
 
 const history = createBrowserHistory({ forceRefresh: true });
 
@@ -33,13 +32,14 @@ const Login: React.FC = () => {
         let data = response.split(".");
         if (data[2] === "True") {
           if (data[1] === "1") {
-            let d = await getJson('wallets')
+            let d = JSON.parse(localStorage.getItem('wallets')!)
             if (d[email] !== undefined) { //check if wallet should be imported
               presentAlert({
                 header: "Success",
                 message: "Logged successfully"
               });
-              setJsonOfJson('wallets', 'logged', { bool: true, email: email })
+              d['logged'] = { bool: true, email: email }
+              localStorage.setItem('wallets', JSON.stringify(d))
               history.push("/Menu", { email: email });
             } else {
               presentAlert({
