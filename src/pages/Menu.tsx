@@ -30,7 +30,7 @@ setupIonicReact();
 
 
 const Menu: React.FC = () => {
-  const location = useLocation<{ email: string }>();
+  const location = useLocation<{ email: string, fullname: string }>();
   const [dataEmail, setDataEmail] = useState({ address: 'address', public_key: 'public_key', private_key: 'private_key', wif: 'wif' });
   const [balance, setBalance] = useState([-1, 0]); // 0(BTC), 1(EUR)
   const [EURChange, setEURChange] = useState(1);
@@ -38,13 +38,13 @@ const Menu: React.FC = () => {
 
   const fetchBalance = useCallback(async () => {
     let d = JSON.parse(localStorage.getItem('wallets')!)
-    //const data = await (await fetch('https://api.blockcypher.com/v1/btc/test3/addrs/' + d[d.logged.email].address + '/balance')).json()
-    const data = { balance: 3694203 }
+    const data = await (await fetch('https://api.blockcypher.com/v1/btc/test3/addrs/' + d[d.logged.email].address + '/balance')).json()
+    //const data = { balance: 3694203 }
     setBalance([data.balance / 100000000, balance[1]])
   }, [])
   const fetchEURChange = useCallback(async () => {
-    //const data = await (await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur')).json()
-    const data = { bitcoin: { eur: 25452.131871208 } }
+    const data = await (await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur')).json()
+    //const data = { bitcoin: { eur: 25452.131871208 } }
     setEURChange(data.bitcoin.eur)
   }, [])
   const fetchTransactions = useCallback(async () => {

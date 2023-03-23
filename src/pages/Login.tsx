@@ -30,7 +30,8 @@ const Login: React.FC = () => {
     }).then((response) => {
       response.text().then(async (response) => {
         let data = response.split(".");
-        if (data[2] === "True") {
+        console.log(data)
+        if (data[3] === "True") {
           if (data[1] === "1") {
             let d = JSON.parse(localStorage.getItem('wallets')!)
             if (d[email] !== undefined) { //check if wallet should be imported

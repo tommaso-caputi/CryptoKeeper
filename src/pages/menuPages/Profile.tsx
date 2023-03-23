@@ -9,16 +9,21 @@ import {
     IonItem,
     IonLabel,
     IonInput,
-    useIonToast
+    useIonToast,
+    useIonActionSheet
 } from '@ionic/react';
+import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces';
 import sha256 from 'fast-sha256';
 import { useState } from 'react';
 import { useLocation } from "react-router-dom";
 
 
 function Profile() {
+    const [present2] = useIonActionSheet();
+    const [result, setResult] = useState<string>();
     const [present] = useIonToast();
-    const location = useLocation<{ email: string }>();
+
+    const location = useLocation<{ email: string, fullname: string }>();
     const [fullname, setFullname] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState(location.state.email);
@@ -45,6 +50,7 @@ function Profile() {
                         duration: 1500,
                         position: 'bottom'
                     });
+                    location.state.fullname = fullname;
                 } else {
                     present({
                         message: 'Something went wrong, try again',
@@ -54,8 +60,7 @@ function Profile() {
                 }
             })
             .catch(error => console.log('error', error));
-    }
-
+    };
     return (
         <>
             <IonHeader>
@@ -75,7 +80,7 @@ function Profile() {
                 }}>
                     <IonItem>
                         <IonLabel position="stacked">Full name</IonLabel>
-                        <IonInput onIonInput={(e: any) => setFullname(e.target.value)} placeholder="Fistname Surname"></IonInput>
+                        <IonInput onIonInput={(e: any) => setFullname(e.target.value)} placeholder={location.state.fullname}></IonInput>
                     </IonItem>
                     <IonItem>
                         <IonLabel position="stacked">Email</IonLabel>
@@ -86,8 +91,32 @@ function Profile() {
                         <IonInput onIonInput={(e: any) => setPassword(e.target.value)} placeholder="change password"></IonInput>
                     </IonItem>
                 </div>
-                <IonButton size="large" expand='block' onClick={save} >Save</IonButton>
-
+                <IonButton
+                    size="large"
+                    expand='block'
+                    onClick={() =>
+                        present2({
+                            header: 'Confirm',
+                            buttons: [
+                                {
+                                    text: 'Update',
+                                    role: "update"
+                                },
+                                {
+                                    text: 'Cancel',
+                                    role: 'cancel'
+                                },
+                            ],
+                            onDidDismiss: ({ detail }) => {
+                                if (detail.role === "update") {
+                                    save()
+                                }
+                            },
+                        })
+                    }
+                >
+                    Save
+                </IonButton>
             </IonContent>
         </>
     );

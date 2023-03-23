@@ -40,13 +40,14 @@ const PasswordLogin: React.FC = () => {
         }).then((response) => {
             response.text().then((response) => {
                 let data = response.split(".");
-                if (data[2] === "True") {
+                console.log(data)
+                if (data[3] === "True") {
                     if (data[1] === "1") {
                         presentAlert({
                             header: "Success",
                             message: "Logged successfully"
                         });
-                        history.push("/mainMenu", { email: email });
+                        history.push("/mainMenu", { email: email, fullname: data[2]});
                     } else {
                         presentAlert({
                             header: "Failed",
