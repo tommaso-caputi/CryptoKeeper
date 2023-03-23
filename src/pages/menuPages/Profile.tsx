@@ -32,8 +32,7 @@ function Profile() {
         const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
             .map(b => b.toString(16).padStart(2, '0'))
             .join('')
-        console.log(password, email, fullname);
-        fetch("http://cryptokeeper.altervista.org/APP/webhook.php", {
+        fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
             method: 'POST',
             body: JSON.stringify({
                 "action": "update",
@@ -59,7 +58,11 @@ function Profile() {
                     });
                 }
             })
-            .catch(error => console.log('error', error));
+            .catch(error => present({
+                message: 'Something went wrong, try again: '+error.message,
+                duration: 1500,
+                position: 'bottom'
+            }));
     };
     return (
         <>
