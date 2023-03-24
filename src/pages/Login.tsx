@@ -26,10 +26,6 @@ const Login: React.FC = () => {
           buttons: ["OK"],
         })
         if (message[0] === "Success") {
-          let d = JSON.parse(localStorage.getItem('wallets')!)
-          console.log(d)
-          d['logged'] = { bool: true, email: email }
-          localStorage.setItem('wallets', JSON.stringify(d))
           history.push("/mainMenu", { email: email });
         }
       });

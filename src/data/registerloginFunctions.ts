@@ -27,6 +27,10 @@ export function loginEmailPassword(email: string, password: string) {
                     if (data[1] === "1") {
                         let d = JSON.parse(localStorage.getItem('wallets')!)
                         if (d[email] !== undefined) { //check if wallet should be imported
+                            let d = JSON.parse(localStorage.getItem('wallets')!)
+                            console.log(d)
+                            d['logged'] = { bool: true, email: email }
+                            localStorage.setItem('wallets', JSON.stringify(d))
                             resolve("Success.Logged successfully");
                         } else {
                             resolve("Failed.Should be imported address data");
@@ -81,22 +85,22 @@ export const loginPassword = (email: string, password: string) => {
 
 
 /* Returns:
-    1 -> Alert: Passwords are differents
-    2 -> Alert: Password too short
-    3 -> Alert: Email is not valid
-    4 -> Failed: This email has already an account
-    5 -> Success
+    Alert.Passwords are differents
+    Alert.Password too short
+    Alert.Email is not valid
+    Failed.This email has already an account
+    Success
 */
-const checks = (email: string, password: string, confirmpassword: string) => {
+export const checks = (email: string, password: string, confirmpassword: string) => {
     return new Promise(function (resolve) {
         if (password.length > 0) {
             if (password !== confirmpassword) {
-                resolve(1)
+                resolve("Alert.Passwords are differents")
             } else {
                 //go ahead
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
-                    resolve(3)
+                    resolve("Alert.Email is not valid")
                 } else {
                     //go ahead
                     fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
@@ -109,68 +113,97 @@ const checks = (email: string, password: string, confirmpassword: string) => {
                         response.text().then((response) => {
                             if (response !== "True") {
                                 // go ahead
-                                resolve(5)
-                                //registration(email, password)
+                                resolve("Success")
                             } else {
-                                resolve(4)
+                                resolve("Failed.This email has already an account")
                             }
                         });
                     });
                 }
             }
         } else {
-            resolve(2)
+            resolve("Alert.Password too short")
         }
     });
 };
 
 /* Returns:
-
+    Success.Account successfully created.il resto
+    Failed.Something went wrong, please try again
 */
-async function registration(email: string, password: string) {
-    const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
-        .map(b => b.toString(16).padStart(2, '0'))
-        .join('')
-    const resultDataAddress = await (await fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })).json()
-    const resultRegistration = await (await fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
-        method: "POST",
-        body: JSON.stringify({
-            action: "registration",
-            email: email,
-            password: passwordHash,
-            address: resultDataAddress.address,
-        }),
-    })).text()
-    if (resultRegistration === "Success") {
-        fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+export async function registration(email: string, password: string) {
+    return new Promise(async function (resolve) {
+        const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('')
+        const resultDataAddress = await (await fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })).json()
+        const resultRegistration = await (await fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
             method: "POST",
             body: JSON.stringify({
-                action: "sendConfirmEmail",
-                email: email
+                action: "registration",
+                email: email,
+                password: passwordHash,
+                address: resultDataAddress.address,
             }),
-        })
-        let json = { 'address': resultDataAddress.address, 'public_key': resultDataAddress.public, 'private_key': resultDataAddress.private, 'wif': resultDataAddress.wif };
-        let d = JSON.parse(localStorage.getItem('wallets')!)
-        d[email] = json
-        localStorage.setItem('wallets', JSON.stringify(d))
-        /* presentAlert({
-            header: "Success",
-            subHeader: "Account successfully created",
-            buttons: [{
-                text: 'OK'
-            },]
-        }); */
-        /* history.push("/remember", {
-            private_key: resultDataAddress.private,
-            public_key: resultDataAddress.public,
-            address: resultDataAddress.address,
-            wif: resultDataAddress.wif,
-            email: email,
-        }); */
-    }
+        })).text()
+        if (resultRegistration === "Success") {
+            fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+                method: "POST",
+                body: JSON.stringify({
+                    action: "sendConfirmEmail",
+                    email: email
+                }),
+            })
+            let json = { 'address': resultDataAddress.address, 'public_key': resultDataAddress.public, 'private_key': resultDataAddress.private, 'wif': resultDataAddress.wif };
+            let d = JSON.parse(localStorage.getItem('wallets')!)
+            d[email] = json
+            localStorage.setItem('wallets', JSON.stringify(d))
+            resolve("Success.Account successfully created."
+                + resultDataAddress.private + "."
+                + resultDataAddress.public + "."
+                + resultDataAddress.address + "."
+                + resultDataAddress.wif
+            )
+        } else {
+            resolve("Failed.Something went wrong, please try again")
+        }
+    });
 }
 
-
-export function fullRegistration() {
-
+/* Returns:
+    Success.Account successfully created
+    Failed.Something went wrong, please try again
+*/
+export async function importRegistration(email: string, password: string, address: string, public_key: string, private_key: string, wif: string) {
+    return new Promise(async function (resolve) {
+        const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('')
+        //const resultDataAddress = await (await fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })).json()
+        const resultRegistration = await (await fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+            method: "POST",
+            body: JSON.stringify({
+                action: "registration",
+                email: email,
+                password: passwordHash,
+                address: address,
+            }),
+        })).text()
+        if (resultRegistration === "Success") {
+            fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+                method: "POST",
+                body: JSON.stringify({
+                    action: "sendConfirmEmail",
+                    email: email
+                }),
+            })
+            let json = { 'address': address, 'public_key': public_key, 'private_key': private_key, 'wif': wif };
+            let d = JSON.parse(localStorage.getItem('wallets')!)
+            d[email] = json
+            localStorage.setItem('wallets', JSON.stringify(d))
+            resolve("Success.Account successfully created")
+        } else {
+            resolve("Failed.Something went wrong, please try again")
+        }
+    });
 }
