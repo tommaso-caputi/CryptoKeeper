@@ -1,4 +1,5 @@
 import sha256 from "fast-sha256";
+import { addWalletStorage, setTrueLoggedStorage } from "./storage";
 
 //login
 
@@ -27,10 +28,7 @@ export function loginEmailPassword(email: string, password: string) {
                     if (data[1] === "1") {
                         let d = JSON.parse(localStorage.getItem('wallets')!)
                         if (d[email] !== undefined) { //check if wallet should be imported
-                            let d = JSON.parse(localStorage.getItem('wallets')!)
-                            console.log(d)
-                            d['logged'] = { bool: true, email: email }
-                            localStorage.setItem('wallets', JSON.stringify(d))
+                            setTrueLoggedStorage(email)
                             resolve("Success.Logged successfully");
                         } else {
                             resolve("Failed.Should be imported address data");
@@ -154,10 +152,7 @@ export async function registration(email: string, password: string) {
                     email: email
                 }),
             })
-            let json = { 'address': resultDataAddress.address, 'public_key': resultDataAddress.public, 'private_key': resultDataAddress.private, 'wif': resultDataAddress.wif };
-            let d = JSON.parse(localStorage.getItem('wallets')!)
-            d[email] = json
-            localStorage.setItem('wallets', JSON.stringify(d))
+            addWalletStorage(email, resultDataAddress.private, resultDataAddress.public, resultDataAddress.address, resultDataAddress.wif)
             resolve("Success.Account successfully created."
                 + resultDataAddress.private + "."
                 + resultDataAddress.public + "."
@@ -197,10 +192,7 @@ export async function importRegistration(email: string, password: string, addres
                     email: email
                 }),
             })
-            let json = { 'address': address, 'public_key': public_key, 'private_key': private_key, 'wif': wif };
-            let d = JSON.parse(localStorage.getItem('wallets')!)
-            d[email] = json
-            localStorage.setItem('wallets', JSON.stringify(d))
+            addWalletStorage(email, private_key, public_key, address, wif)
             resolve("Success.Account successfully created")
         } else {
             resolve("Failed.Something went wrong, please try again")

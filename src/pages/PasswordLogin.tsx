@@ -9,6 +9,7 @@ import {
 import { createBrowserHistory } from "history";
 import { useCallback, useEffect, useState } from "react";
 import { loginPassword } from "../data/registerloginFunctions";
+import { setFalseLoggedStorage } from "../data/storage";
 
 const history = createBrowserHistory({ forceRefresh: true });
 setupIonicReact();
@@ -81,9 +82,7 @@ const PasswordLogin: React.FC = () => {
                         size="default"
                         expand="block"
                         onClick={async () => {
-                            let d = JSON.parse(localStorage.getItem('wallets')!)
-                            d['logged'] = { bool: false, email: "" }
-                            localStorage.setItem('wallets', JSON.stringify(d))
+                            setFalseLoggedStorage()
                             history.push("/login");
                         }}
                     >
