@@ -12,7 +12,6 @@ import {
   IonTitle,
   IonHeader,
   IonMenuToggle,
-  IonNav,
   IonNavLink,
   IonList,
   IonItem,
