@@ -12,11 +12,9 @@ import {
     useIonToast,
     useIonActionSheet
 } from '@ionic/react';
-import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces';
 import sha256 from 'fast-sha256';
 import { useState } from 'react';
 import { useLocation } from "react-router-dom";
-
 
 function Profile() {
     const [present2] = useIonActionSheet();
@@ -59,7 +57,7 @@ function Profile() {
                 }
             })
             .catch(error => present({
-                message: 'Something went wrong, try again: '+error.message,
+                message: 'Something went wrong, try again: ' + error.message,
                 duration: 1500,
                 position: 'bottom'
             }));
