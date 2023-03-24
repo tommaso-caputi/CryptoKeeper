@@ -24,6 +24,7 @@ import { createBrowserHistory } from "history";
 
 import Profile from './menuPages/Profile';
 import '../css/Menu.css';
+import { getWalletsStorage, setFalseLoggedStorage } from "../data/storage";
 const history = createBrowserHistory({ forceRefresh: true });
 setupIonicReact();
 
@@ -36,7 +37,7 @@ const Menu: React.FC = () => {
   const [transactions, setTransactions] = useState<string[] | []>([]);
 
   const fetchBalance = useCallback(async () => {
-    let d = JSON.parse(localStorage.getItem('wallets')!)
+    let d = getWalletsStorage()
     const data = await (await fetch('https://api.blockcypher.com/v1/btc/test3/addrs/' + d[d.logged.email].address + '/balance')).json()
     //const data = { balance: 3694203 }
     setBalance([data.balance / 100000000, balance[1]])
@@ -62,11 +63,9 @@ const Menu: React.FC = () => {
         setTransactions(prevArray => [...prevArray, splittedData[i]])
       }
     }
-    //const data = ['3', '4', '5', '6', '7'];
-    //data.map(transaction => setTransactions(prevArray => [...prevArray, transaction]))
   }, [location.state.email])
   const fetchDataEmail = useCallback(async () => {
-    let d = JSON.parse(localStorage.getItem('wallets')!)
+    let d = getWalletsStorage()
     setDataEmail(d[location.state.email]);
   }, [location.state.email])
 
@@ -96,9 +95,7 @@ const Menu: React.FC = () => {
         <IonContent className="ion-padding">
           <IonList>
             <IonItem button onClick={() => {
-              let d = JSON.parse(localStorage.getItem('wallets')!)
-              d['logged'] = { bool: false, email: "" }
-              localStorage.setItem('wallets', JSON.stringify(d))
+              setFalseLoggedStorage()
               history.push('/login')
             }
             }>
