@@ -63,8 +63,6 @@ const Menu: React.FC = () => {
         setTransactions(prevArray => [...prevArray, splittedData[i]])
       }
     }
-    //const data = ['3', '4', '5', '6', '7'];
-    //data.map(transaction => setTransactions(prevArray => [...prevArray, transaction]))
   }, [location.state.email])
   const fetchDataEmail = useCallback(async () => {
     let d = getWalletsStorage()
