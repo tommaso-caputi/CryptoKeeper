@@ -25,6 +25,7 @@ import { createBrowserHistory } from "history";
 import Profile from './menuPages/Profile';
 import '../css/Menu.css';
 import { getWalletsStorage, setFalseLoggedStorage } from "../data/storage";
+import SendTransaction from "./menuPages/SendTransaction";
 const history = createBrowserHistory({ forceRefresh: true });
 setupIonicReact();
 
@@ -139,9 +140,11 @@ const Menu: React.FC = () => {
             justifyContent: 'space-around',
             flexDirection: 'row',
           }}>
-            <IonButton size="large">
-              <IonIcon slot="icon-only" icon={arrowUpOutline}></IonIcon>
-            </IonButton>
+            <IonNavLink routerDirection="forward" component={() => <SendTransaction />}>
+              <IonButton size="large">
+                <IonIcon slot="icon-only" icon={arrowUpOutline}></IonIcon>
+              </IonButton>
+            </IonNavLink>
             <IonButton size="large">
               <IonIcon slot="icon-only" icon={arrowDownOutline}></IonIcon>
             </IonButton>

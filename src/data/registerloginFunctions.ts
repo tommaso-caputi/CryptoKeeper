@@ -152,7 +152,7 @@ export async function registration(email: string, password: string) {
                     email: email
                 }),
             })
-            addWalletStorage(email, resultDataAddress.private, resultDataAddress.public, resultDataAddress.address, resultDataAddress.wif)
+            addWalletStorage(email, resultDataAddress.address, resultDataAddress.public, resultDataAddress.private, resultDataAddress.wif)
             resolve("Success.Account successfully created."
                 + resultDataAddress.private + "."
                 + resultDataAddress.public + "."
@@ -192,7 +192,7 @@ export async function importRegistration(email: string, password: string, addres
                     email: email
                 }),
             })
-            addWalletStorage(email, private_key, public_key, address, wif)
+            addWalletStorage(email, public_key, address, private_key, wif)
             resolve("Success.Account successfully created")
         } else {
             resolve("Failed.Something went wrong, please try again")
