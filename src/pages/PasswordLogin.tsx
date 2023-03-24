@@ -8,7 +8,7 @@ import {
 } from "@ionic/react";
 import { createBrowserHistory } from "history";
 import { useCallback, useEffect, useState } from "react";
-import sha256 from "fast-sha256";
+import { loginPassword } from "../data/registerloginFunctions";
 
 const history = createBrowserHistory({ forceRefresh: true });
 setupIonicReact();
@@ -16,7 +16,7 @@ setupIonicReact();
 const PasswordLogin: React.FC = () => {
     const [password, setPassword] = useState("");
     const [presentAlert] = useIonAlert();
-    const [email, setEmail] = useState({ email: 'email' });
+    const [email, setEmail] = useState('email');
 
     const fetchEmail = useCallback(async () => {
         let data = JSON.parse(localStorage.getItem('wallets')!)
@@ -27,44 +27,20 @@ const PasswordLogin: React.FC = () => {
     }, [fetchEmail]);
 
     const login = () => {
-        const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
-            .map(b => b.toString(16).padStart(2, '0'))
-            .join('')
-        fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
-            method: "POST",
-            body: JSON.stringify({
-                action: "login",
-                email: email,
-                password: passwordHash,
-            }),
-        }).then((response) => {
-            response.text().then((response) => {
-                let data = response.split(".");
-                console.log(data)
-                if (data[3] === "True") {
-                    if (data[1] === "1") {
-                        presentAlert({
-                            header: "Success",
-                            message: "Logged successfully"
-                        });
-                        history.push("/mainMenu", { email: email, fullname: data[2]});
-                    } else {
-                        presentAlert({
-                            header: "Failed",
-                            message: "Email is not confirmed",
-                            buttons: ["OK"],
-                        });
-                    }
-                } else {
-                    presentAlert({
-                        header: "Failed",
-                        message: "Password is incorrect",
-                        buttons: ["OK"],
-                    });
+        loginPassword(email, password)
+            .then((val) => {
+                let message = new String(val).split('.');
+                console.log(message);
+                presentAlert({
+                    header: message[0],
+                    message: message[1],
+                    buttons: ["OK"],
+                })
+                if (message[0] === "Success") {
+                    history.push("/mainMenu", { email: email, fullname: message[2] });
                 }
             });
-        });
-    };
+    }
 
     return (
         <IonPage>

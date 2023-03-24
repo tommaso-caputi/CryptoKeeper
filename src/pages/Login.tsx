@@ -7,7 +7,7 @@ import {
 } from "@ionic/react";
 import { createBrowserHistory } from "history";
 import { useState } from "react";
-import sha256 from "fast-sha256";
+import { loginEmailPassword } from "../data/registerloginFunctions";
 
 const history = createBrowserHistory({ forceRefresh: true });
 
@@ -17,55 +17,19 @@ const Login: React.FC = () => {
   const [presentAlert] = useIonAlert();
 
   const login = () => {
-    const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
-      .map(b => b.toString(16).padStart(2, '0'))
-      .join('')
-    fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
-      method: "POST",
-      body: JSON.stringify({
-        action: "login",
-        email: email,
-        password: passwordHash,
-      }),
-    }).then((response) => {
-      response.text().then(async (response) => {
-        let data = response.split(".");
-        console.log(data)
-        if (data[3] === "True") {
-          if (data[1] === "1") {
-            let d = JSON.parse(localStorage.getItem('wallets')!)
-            if (d[email] !== undefined) { //check if wallet should be imported
-              presentAlert({
-                header: "Success",
-                message: "Logged successfully"
-              });
-              d['logged'] = { bool: true, email: email }
-              localStorage.setItem('wallets', JSON.stringify(d))
-              history.push("/mainMenu", { email: email });
-            } else {
-              presentAlert({
-                header: "Failed",
-                message: "You should import address data",
-                buttons: ["OK"],
-              });
-            }
-          } else {
-            presentAlert({
-              header: "Failed",
-              message: "Email is not confirmed",
-              buttons: ["OK"],
-            });
-          }
-        } else {
-          presentAlert({
-            header: "Failed",
-            message: "Email or password are incorrect",
-            buttons: ["OK"],
-          });
+    loginEmailPassword(email, password)
+      .then((val) => {
+        let message = new String(val).split('.');
+        presentAlert({
+          header: message[0],
+          message: message[1],
+          buttons: ["OK"],
+        })
+        if (message[0] === "Success") {
+          history.push("/mainMenu", { email: email });
         }
       });
-    });
-  };
+  }
 
   return (
     <IonPage>
