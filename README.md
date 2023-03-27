@@ -1,12 +1,4 @@
 <a name="readme-top"></a>
-<!--
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
--->
 
 
 <!-- PROJECT LOGO -->
@@ -77,29 +69,30 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Crypto keeper is a crypto wallet build with ionic and react, you need to install all the essential for run 
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+Need to have installed npm and ionic cli
 * npm
   ```sh
   npm install npm@latest -g
   npm install -g @ionic/cli
   ```
 
-### Installation
+### Installation and run
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone  https://github.com/tommaso-caputi/CryptoKeeper.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
+   ```
+3. Run 
+   ```sh
+   ionic serve
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -143,7 +136,7 @@ See the [open issues](https://github.com/othneildrew/Best-README-Template/issues
 
 Crypto Keeper Team - cryptokeeperitis@gmail.com
 
-Website: https://cryptokeeper.altervista.org/
+Website: https://cryptokeeper.altervista.org/<br>
 Project Link: [https://github.com/your_username/repo_name](https://github.com/tommaso-caputi/CryptoKeeper.git)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
