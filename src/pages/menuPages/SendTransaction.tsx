@@ -23,7 +23,7 @@ function SendTransaction() {
 
     const check = () => {
         sendTransaction(to, value)
-        if (to) {
+        /* if (to) {
             if (value) {
                 sendTransaction(to, value).then((val) => {
                     let message = new String(val).split('.')
@@ -46,7 +46,7 @@ function SendTransaction() {
                 message: "No address to send",
                 buttons: ["OK"],
             })
-        }
+        } */
     }
 
     return (
