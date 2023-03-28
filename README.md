@@ -111,7 +111,10 @@ Need to have installed npm and ionic cli
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Add Changelog
+- [ ] Add Qr code reading and reader
+- [ ] Add NFC reader and listener
+- [ ] Add graphs page
+- [ ] Add all pages in menu
 - [ ] Multi-language Support
     - [ ] Italian
 
