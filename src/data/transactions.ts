@@ -1,82 +1,44 @@
-import { getWalletsStorage } from "./storage";
+export const sendTransaction = async () => {
+    let fromAddress = "C7FEhqdB9pJqr2BTgS4gEJfNKezZZupTkv"
+    let toAddress = "C36fr59PPnzyjDZmxRYwyEbPSo95KtxtqB"
+    let value = 12412
 
-/* Retuns:
-    Success.transactionhash
-    Failed.Something went wrong, please try again
-*/
-export const sendTransaction = (to: string, value: any) => {
-    return new Promise(async function (resolve) {
-        let a = getWalletsStorage()
-        let from = a[a['logged']['email']]['address']
-        to = 'C36fr59PPnzyjDZmxRYwyEbPSo95KtxtqB';
-        value = '121213'
-        value = parseInt(value, 10);
-
-        //create transaction to sign
-        let temp = await getTxToSign(from, to, value);
-        let json = JSON.parse(temp)
-
-        //need to sign 
-        let signature = sign(json.tosign[0], a[a['logged']['email']]['private_key'])
-
-        //create final transaction
-        transaction(json.tx, json.tosign[0], a[a['logged']['email']]['public_key'], signature)
-    });
+    //createTransaction(fromAddress, toAddress, value)
+    signTransaction()
 }
 
-const getTxToSign = (from: string, to: string, value: number) => {
-    return new Promise<string>(async function (resolve) {
-        fetch("https://api.blockcypher.com/v1/bcy/test/txs/new", {
-            method: 'POST',
-            body: JSON.stringify({
-                "inputs": [
-                    {
-                        "addresses": [
-                            "C7FEhqdB9pJqr2BTgS4gEJfNKezZZupTkv"
-                        ]
-                    }
-                ],
-                "outputs": [
-                    {
-                        "addresses": [
-                            to
-                        ],
-                        "value": value
-                    }
+const signTransaction = () => {
+    let tosign = "97bd508700922670c0b2f596d152d93086ae95787a2215b2509497f5c6b86424"
+    let hexPrivateKey = "63341222711063c3befbf1dd046d25219b1454bb110d8cc1ce385b6e6bf44594"
+
+    
+}
+
+const createTransaction = async (fromAddress: string, toAddress: string, value: number) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify({
+        "inputs": [
+            {
+                "addresses": [
+                    fromAddress
                 ]
-            }),
-            redirect: 'follow'
-        })
-            .then(response => response.text())
-            .then(result => resolve(result))
-            .catch(error => console.log('error', error));
-    });
-}
-
-const transaction = (tx: JSON, tosign: string, publicKey: string, signature: string) => {
-    return new Promise(async function (resolve) {
-        fetch("https://api.blockcypher.com/v1/bcy/test/txs/send?token=1f4af807461e464d9aec36fed62ba29f", {
-            method: 'POST',
-            body: JSON.stringify({
-                "tx": tx,
-                "tosign": [
-                    tosign
+            }
+        ],
+        "outputs": [
+            {
+                "addresses": [
+                    toAddress
                 ],
-                "signatures": [
-                    signature
-                ],
-                "pubkeys": [
-                    publicKey
-                ]
-            }),
-            redirect: 'follow'
-        })
-            .then(response => response.json())
-            .then(result => resolve(result))
-            .catch(error => console.log('error', error));
+                "value": value
+            }
+        ]
     });
-}
-
-const sign = (tosign: string, private_key: string) => {
-    return 'prova'
+    let result = await (await fetch("https://api.blockcypher.com/v1/bcy/test/txs/new", {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    })).json()
+    console.log(result);
 }

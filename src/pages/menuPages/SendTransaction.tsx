@@ -11,6 +11,7 @@ import {
     IonInput,
     IonIcon,
     useIonAlert,
+    IonText,
 } from '@ionic/react';
 import { phonePortraitOutline, qrCodeOutline } from 'ionicons/icons';
 import { useState } from 'react';
@@ -22,7 +23,7 @@ function SendTransaction() {
     const [to, setTo] = useState('')
 
     const check = () => {
-        sendTransaction(to, value)
+        sendTransaction()
         /* if (to) {
             if (value) {
                 sendTransaction(to, value).then((val) => {
@@ -66,7 +67,7 @@ function SendTransaction() {
                     flexDirection: 'column',
                     justifyContent: 'space-evenly',
                 }}>
-                    <IonLabel position="stacked" >To</IonLabel>
+                    <IonText>To</IonText>
                     <div style={{
                         display: 'flex',
                         flexDirection: 'row',
@@ -80,7 +81,7 @@ function SendTransaction() {
                         </IonButton>
                     </div>
                     <IonItem>
-                        <IonLabel position="stacked">Value in satoshi</IonLabel>
+                        <IonLabel position="stacked">Value (satoshi)</IonLabel>
                         <IonInput type="number" onIonInput={(e: any) => setValue(e.target.value)}></IonInput>
                     </IonItem>
                     <IonButton size="large" expand='block' onClick={check}>Send</IonButton>
