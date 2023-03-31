@@ -1,20 +1,28 @@
+import { scale } from "ionicons/icons"
 import { getWalletsStorage } from "./storage"
 
 export const sendTransaction = async (toAddress: string, value: number) => {
     let storageData = getWalletsStorage()
     let fromAddress = storageData[storageData['logged']['email']]['address']
 
-    
     let unsigned_tx = await createTransaction(fromAddress, toAddress, value)
     if (unsigned_tx['errors']) {
         return 'Error.' + unsigned_tx['errors'][0]['error'] + ', please try again'
     } else {
-        console.log(setupTxJson(unsigned_tx))
-        return 'Success.Transaction created successfully, wait for signature and broadcast(check transaction list)'
+        let tosign = unsigned_tx['tosign'][0]
+        let changed_tx = setupTxJson(unsigned_tx['tx'])
+        console.log(changed_tx)
+        let a = await (await saveUnsignedtoDB(storageData['logged']['email'], changed_tx, tosign, fromAddress, toAddress))
+        if (a === 'Success') {
+            return 'Success.Transaction created successfully, wait for signature and broadcast(check transaction list)'
+        } else {
+            return 'Error. Something went wrong, please try again'
+        }
     }
 }
 
 const createTransaction = async (fromAddress: string, toAddress: string, value: number) => {
+    console.log(fromAddress, toAddress, value)
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
@@ -28,13 +36,13 @@ const createTransaction = async (fromAddress: string, toAddress: string, value: 
         "outputs": [
             {
                 "addresses": [
-                    'as'
-                    //toAddress
+                    toAddress
                 ],
                 "value": value
             }
         ]
     });
+    console.log(JSON.parse(raw));
     let result = await (await fetch("https://api.blockcypher.com/v1/bcy/test/txs/new", {
         method: 'POST',
         headers: myHeaders,
@@ -55,17 +63,17 @@ const saveUnsignedtoDB = async (email: string, tx: string, tosign: string, fromA
         "fromAddress": fromAddress,
         "toAddress": toAddress
     });
-    fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+    let result = await (await fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
         method: 'POST',
         headers: myHeaders,
         body: raw,
         redirect: 'follow'
-    })
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+    }))
+    return result.text();
 }
 
 const setupTxJson = (tx: JSON) => {
-
+    let tx_string = JSON.stringify(tx)
+    let tx_changed = tx_string.replace(/\"/g, "`")
+    return tx_changed
 }

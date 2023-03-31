@@ -39,8 +39,8 @@ const Menu: React.FC = () => {
 
   const fetchBalance = useCallback(async () => {
     let d = getWalletsStorage()
-    const data = await (await fetch('https://api.blockcypher.com/v1/bcy/test/addrs/' + d[d.logged.email].address + '/balance')).json()
-    //const data = { balance: 3694203 }
+    //const data = await (await fetch('https://api.blockcypher.com/v1/bcy/test/addrs/' + d[d.logged.email].address + '/balance')).json()
+    const data = { balance: 3694203 }
     setBalance([data.balance / 100000000, balance[1]])
   }, [])
   const fetchEURChange = useCallback(async () => {
@@ -57,8 +57,7 @@ const Menu: React.FC = () => {
           email: location.state.email
         }),
       })).text()
-    let splittedData = data.split(',');
-    console.log(splittedData)
+    let splittedData = data.split('?');
     if (splittedData[0] === "True") {
       setTransactions([])
       for (let i = 1; i < splittedData.length - 1; i++) {
@@ -155,13 +154,11 @@ const Menu: React.FC = () => {
             <IonContent>
               {transactions.map(transaction => {
                 let splittedTransaction = transaction.split(';')
+                let tx = JSON.parse(splittedTransaction[0].replace(/`/g, "\"").replace(/&quot;/ig, '"'))
                 return (
-                  <IonCard key={splittedTransaction[0]}>
+                  <IonCard key={tx['received']}>
                     <IonCardContent>
-                      {splittedTransaction[1]}
-                      <IonText>              value= </IonText>
-                      {splittedTransaction[2]}
-                      <IonText>  BTC</IonText>
+                      <IonText>{splittedTransaction[1]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{tx['outputs'][0]['value']} BTC</IonText>
                     </IonCardContent>
                   </IonCard>
                 )
