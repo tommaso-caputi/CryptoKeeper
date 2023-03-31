@@ -1,17 +1,17 @@
-export const sendTransaction = async () => {
-    let fromAddress = "C7FEhqdB9pJqr2BTgS4gEJfNKezZZupTkv"
-    let toAddress = "C36fr59PPnzyjDZmxRYwyEbPSo95KtxtqB"
-    let value = 12412
+import { getWalletsStorage } from "./storage"
 
-    //createTransaction(fromAddress, toAddress, value)
-    signTransaction()
-}
-
-const signTransaction = () => {
-    let tosign = "97bd508700922670c0b2f596d152d93086ae95787a2215b2509497f5c6b86424"
-    let hexPrivateKey = "63341222711063c3befbf1dd046d25219b1454bb110d8cc1ce385b6e6bf44594"
+export const sendTransaction = async (toAddress: string, value: number) => {
+    let storageData = getWalletsStorage()
+    let fromAddress = storageData[storageData['logged']['email']]['address']
 
     
+    let unsigned_tx = await createTransaction(fromAddress, toAddress, value)
+    if (unsigned_tx['errors']) {
+        return 'Error.' + unsigned_tx['errors'][0]['error'] + ', please try again'
+    } else {
+        console.log(setupTxJson(unsigned_tx))
+        return 'Success.Transaction created successfully, wait for signature and broadcast(check transaction list)'
+    }
 }
 
 const createTransaction = async (fromAddress: string, toAddress: string, value: number) => {
@@ -28,7 +28,8 @@ const createTransaction = async (fromAddress: string, toAddress: string, value: 
         "outputs": [
             {
                 "addresses": [
-                    toAddress
+                    'as'
+                    //toAddress
                 ],
                 "value": value
             }
@@ -40,5 +41,31 @@ const createTransaction = async (fromAddress: string, toAddress: string, value: 
         body: raw,
         redirect: 'follow'
     })).json()
-    console.log(result);
+    return result
+}
+
+const saveUnsignedtoDB = async (email: string, tx: string, tosign: string, fromAddress: string, toAddress: string) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify({
+        "action": "addTransaction",
+        "email": email,
+        "tx": tx,
+        "tosing": tosign,
+        "fromAddress": fromAddress,
+        "toAddress": toAddress
+    });
+    fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    })
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+}
+
+const setupTxJson = (tx: JSON) => {
+
 }

@@ -39,7 +39,7 @@ const Menu: React.FC = () => {
 
   const fetchBalance = useCallback(async () => {
     let d = getWalletsStorage()
-    const data = await (await fetch('https://api.blockcypher.com/v1/btc/test3/addrs/' + d[d.logged.email].address + '/balance')).json()
+    const data = await (await fetch('https://api.blockcypher.com/v1/bcy/test/addrs/' + d[d.logged.email].address + '/balance')).json()
     //const data = { balance: 3694203 }
     setBalance([data.balance / 100000000, balance[1]])
   }, [])
@@ -58,6 +58,7 @@ const Menu: React.FC = () => {
         }),
       })).text()
     let splittedData = data.split(',');
+    console.log(splittedData)
     if (splittedData[0] === "True") {
       setTransactions([])
       for (let i = 1; i < splittedData.length - 1; i++) {

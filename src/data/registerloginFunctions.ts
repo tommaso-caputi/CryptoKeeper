@@ -134,7 +134,8 @@ export async function registration(email: string, password: string) {
         const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
             .map(b => b.toString(16).padStart(2, '0'))
             .join('')
-        const resultDataAddress = await (await fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })).json()
+        //const resultDataAddress = await (await fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })).json()
+        const resultDataAddress = await (await fetch("https://api.blockcypher.com/v1/bcy/test/addrs", { method: 'POST', redirect: 'follow' })).json()
         const resultRegistration = await (await fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
             method: "POST",
             body: JSON.stringify({
@@ -174,7 +175,6 @@ export async function importRegistration(email: string, password: string, addres
         const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
             .map(b => b.toString(16).padStart(2, '0'))
             .join('')
-        //const resultDataAddress = await (await fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })).json()
         const resultRegistration = await (await fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
             method: "POST",
             body: JSON.stringify({

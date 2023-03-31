@@ -19,12 +19,11 @@ import { sendTransaction } from '../../data/transactions';
 
 function SendTransaction() {
     const [presentAlert] = useIonAlert();
-    const [value, setValue] = useState('')
-    const [to, setTo] = useState('')
+    const [value, setValue] = useState(1241)
+    const [to, setTo] = useState('C36fr59PPnzyjDZmxRYwyEbPSo95KtxtqB')
 
     const check = () => {
-        sendTransaction()
-        /* if (to) {
+        if (to) {
             if (value) {
                 sendTransaction(to, value).then((val) => {
                     let message = new String(val).split('.')
@@ -47,7 +46,7 @@ function SendTransaction() {
                 message: "No address to send",
                 buttons: ["OK"],
             })
-        } */
+        }
     }
 
     return (
