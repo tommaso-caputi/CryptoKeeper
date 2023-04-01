@@ -156,9 +156,12 @@ const Menu: React.FC = () => {
                 let splittedTransaction = transaction.split(';')
                 let tx = JSON.parse(splittedTransaction[0].replace(/`/g, "\"").replace(/&quot;/ig, '"'))
                 return (
-                  <IonCard key={tx['received']}>
+                  <IonCard key={tx}>
                     <IonCardContent>
-                      <IonText>{splittedTransaction[1]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{tx['outputs'][0]['value']} BTC</IonText>
+                      <IonText>{splittedTransaction[1]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {tx['outputs'][0]['value']} BTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Confirmed: {splittedTransaction[2]}
+                      </IonText>
                     </IonCardContent>
                   </IonCard>
                 )
