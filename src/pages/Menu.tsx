@@ -32,7 +32,6 @@ setupIonicReact();
 
 const Menu: React.FC = () => {
   const location = useLocation<{ email: string, fullname: string }>();
-  const [dataEmail, setDataEmail] = useState({ address: 'address', public_key: 'public_key', private_key: 'private_key', wif: 'wif' });
   const [balance, setBalance] = useState([-1, 0]); // 0(BTC), 1(EUR)
   const [EURChange, setEURChange] = useState(1);
   const [transactions, setTransactions] = useState<string[] | []>([]);
@@ -65,17 +64,12 @@ const Menu: React.FC = () => {
       }
     }
   }, [location.state.email])
-  const fetchDataEmail = useCallback(async () => {
-    let d = getWalletsStorage()
-    setDataEmail(d[location.state.email]);
-  }, [location.state.email])
 
   useEffect(() => {
-    fetchDataEmail();
     fetchEURChange();
     fetchBalance();
     fetchTransactions();
-  }, [fetchBalance, fetchDataEmail, fetchEURChange, fetchTransactions]);
+  }, [fetchBalance, fetchEURChange, fetchTransactions]);
 
   const changeBalanceType = () => {
     if (balance[1] === 0) {
