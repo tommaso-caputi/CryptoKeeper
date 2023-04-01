@@ -34,9 +34,16 @@ function SendTransaction() {
                     presentAlert({
                         header: message[0],
                         message: message[1],
-                        buttons: ["OK"],
+                        buttons: [
+                            {
+                                text: 'OK',
+                                handler: () => {
+                                    history.push('/mainmenu', { email: getWalletsStorage()['logged']['email'] })
+                                }
+                            }
+                        ],
+
                     })
-                    history.push('/mainmenu', { email: getWalletsStorage()['logged']['email'] })
                 })
             } else {
                 presentAlert({
@@ -85,7 +92,7 @@ function SendTransaction() {
                         </IonButton>
                     </div>
                     <IonItem>
-                        <IonLabel position="stacked">Value (satoshi)</IonLabel>
+                        <IonLabel position="stacked">Value (BTC)</IonLabel>
                         <IonInput type="number" onIonInput={(e: any) => setValue(e.target.value)}></IonInput>
                     </IonItem>
                     <IonButton size="large" expand='block' onClick={check}>Send</IonButton>

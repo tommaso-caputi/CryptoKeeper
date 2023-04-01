@@ -4,6 +4,7 @@ import { getWalletsStorage } from "./storage"
 export const sendTransaction = async (toAddress: string, value: number) => {
     let storageData = getWalletsStorage()
     let fromAddress = storageData[storageData['logged']['email']]['address']
+    value = value * 100000000
 
     let unsigned_tx = await createTransaction(fromAddress, toAddress, value)
     if (unsigned_tx['errors']) {

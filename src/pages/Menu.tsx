@@ -159,7 +159,7 @@ const Menu: React.FC = () => {
                   <IonCard key={tx}>
                     <IonCardContent>
                       <IonText>{splittedTransaction[1]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {tx['outputs'][0]['value']} BTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {tx['outputs'][0]['value'] / 100000000} BTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         Confirmed: {splittedTransaction[2]}
                       </IonText>
                     </IonCardContent>
