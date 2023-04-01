@@ -39,8 +39,8 @@ const Menu: React.FC = () => {
 
   const fetchBalance = useCallback(async () => {
     let d = getWalletsStorage()
-    //const data = await (await fetch('https://api.blockcypher.com/v1/bcy/test/addrs/' + d[d.logged.email].address + '/balance')).json()
-    const data = { balance: 3694203 }
+    const data = await (await fetch('https://api.blockcypher.com/v1/bcy/test/addrs/' + d[d.logged.email].address + '/balance')).json()
+    //const data = { balance: 3000000 }
     setBalance([data.balance / 100000000, balance[1]])
   }, [])
   const fetchEURChange = useCallback(async () => {
