@@ -154,7 +154,13 @@ const Menu: React.FC = () => {
                     <IonCardContent>
                       <IonText>{splittedTransaction[1]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         {tx['outputs'][0]['value'] / 100000000} BTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        Confirmed: {splittedTransaction[2]}
+                        Confirmed:&nbsp;
+                        {splittedTransaction[2] === '0' &&
+                          'no'
+                        }
+                        {balance[1] === 1 &&
+                          'yes'
+                        }
                       </IonText>
                     </IonCardContent>
                   </IonCard>
