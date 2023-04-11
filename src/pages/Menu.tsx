@@ -22,10 +22,13 @@ import { useLocation } from "react-router-dom";
 import { arrowUpOutline, arrowDownOutline, personOutline, gridOutline } from 'ionicons/icons';
 import { createBrowserHistory } from "history";
 
-import Profile from './menuPages/Profile';
-import '../css/Menu.css';
 import { getWalletsStorage, setFalseLoggedStorage } from "../data/storage";
+import '../css/Menu.css';
+
+import Profile from './menuPages/Profile';
 import SendTransaction from "./menuPages/SendTransaction";
+import ReceiveTransaction from "./menuPages/ReceiveTransaction";
+
 const history = createBrowserHistory({ forceRefresh: true });
 setupIonicReact();
 
@@ -58,7 +61,7 @@ const Menu: React.FC = () => {
       })).text()
     let splittedData = data.split('?');
     if (splittedData[0] === "True") {
-      setTransactions([])
+      await setTransactions([])
       for (let i = 1; i < splittedData.length - 1; i++) {
         setTransactions(prevArray => [...prevArray, splittedData[i]])
       }
@@ -139,9 +142,11 @@ const Menu: React.FC = () => {
                 <IonIcon slot="icon-only" icon={arrowUpOutline}></IonIcon>
               </IonButton>
             </IonNavLink>
-            <IonButton size="large">
-              <IonIcon slot="icon-only" icon={arrowDownOutline}></IonIcon>
-            </IonButton>
+            <IonNavLink routerDirection="forward" component={() => <ReceiveTransaction />}>
+              <IonButton size="large">
+                <IonIcon slot="icon-only" icon={arrowDownOutline}></IonIcon>
+              </IonButton>
+            </IonNavLink>
           </div>
           <div style={{ height: '44.5%' }}>
             <p className="text-balance3">Transactions</p>
@@ -155,12 +160,7 @@ const Menu: React.FC = () => {
                       <IonText>{splittedTransaction[1]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         {tx['outputs'][0]['value'] / 100000000} BTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         Confirmed:&nbsp;
-                        {splittedTransaction[2] === '0' &&
-                          'no'
-                        }
-                        {balance[1] === 1 &&
-                          'yes'
-                        }
+                        {splittedTransaction[2] === '0' ? 'no' : 'yes'}
                       </IonText>
                     </IonCardContent>
                   </IonCard>

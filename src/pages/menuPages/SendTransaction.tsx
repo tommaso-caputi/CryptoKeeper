@@ -11,7 +11,6 @@ import {
     IonInput,
     IonIcon,
     useIonAlert,
-    IonText,
 } from '@ionic/react';
 import { phonePortraitOutline, qrCodeOutline } from 'ionicons/icons';
 import { useState } from 'react';
@@ -78,7 +77,6 @@ function SendTransaction() {
                     flexDirection: 'column',
                     justifyContent: 'space-evenly',
                 }}>
-                    <IonText>To</IonText>
                     <div style={{
                         display: 'flex',
                         flexDirection: 'row',
