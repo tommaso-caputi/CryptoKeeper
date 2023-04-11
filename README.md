@@ -138,7 +138,7 @@ See the [open issues](https://github.com/othneildrew/Best-README-Template/issues
 Crypto Keeper Team - cryptokeeperitis@gmail.com
 
 Website: https://cryptokeeper.altervista.org/<br>
-Project Link: [https://github.com/your_username/repo_name](https://github.com/tommaso-caputi/CryptoKeeper.git)
+Project Link: [https://github.com/tommaso-caputi/CryptoKeeper](https://github.com/tommaso-caputi/CryptoKeeper.git)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
