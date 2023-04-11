@@ -13,7 +13,7 @@ import {
     useIonActionSheet
 } from '@ionic/react';
 import sha256 from 'fast-sha256';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
 
 function Profile() {
@@ -21,10 +21,25 @@ function Profile() {
     const [result, setResult] = useState<string>();
     const [present] = useIonToast();
 
-    const location = useLocation<{ email: string, fullname: string }>();
+    const location = useLocation<{ email: string }>();
     const [fullname, setFullname] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState(location.state.email);
+
+    const fetchFullname = useCallback(async () => {
+        const data = await (await
+            fetch('https://cryptokeeper.altervista.org/APP/webhook.php', {
+                method: "POST",
+                body: JSON.stringify({
+                    action: "getFullname",
+                    email: location.state.email
+                }),
+            })).text()
+        setFullname(data)
+    }, [location.state.email])
+    useEffect(() => {
+        fetchFullname()
+    }, [fetchFullname]);
 
     const save = () => {
         const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
@@ -47,7 +62,7 @@ function Profile() {
                         duration: 1500,
                         position: 'bottom'
                     });
-                    location.state.fullname = fullname;
+                    setFullname(fullname);
                 } else {
                     present({
                         message: 'Something went wrong, try again',
@@ -81,7 +96,7 @@ function Profile() {
                 }}>
                     <IonItem>
                         <IonLabel position="stacked">Full name</IonLabel>
-                        <IonInput onIonInput={(e: any) => setFullname(e.target.value)} placeholder={location.state.fullname}></IonInput>
+                        <IonInput onIonInput={(e: any) => setFullname(e.target.value)} placeholder={fullname}></IonInput>
                     </IonItem>
                     <IonItem>
                         <IonLabel position="stacked">Email</IonLabel>
@@ -89,7 +104,7 @@ function Profile() {
                     </IonItem>
                     <IonItem>
                         <IonLabel position="stacked">Password</IonLabel>
-                        <IonInput onIonInput={(e: any) => setPassword(e.target.value)} placeholder="change password"></IonInput>
+                        <IonInput disabled={true} onIonInput={(e: any) => setPassword(e.target.value)} placeholder="change password"></IonInput>
                     </IonItem>
                 </div>
                 <IonButton

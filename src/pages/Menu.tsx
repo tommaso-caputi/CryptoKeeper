@@ -22,25 +22,27 @@ import { useLocation } from "react-router-dom";
 import { arrowUpOutline, arrowDownOutline, personOutline, gridOutline } from 'ionicons/icons';
 import { createBrowserHistory } from "history";
 
-import Profile from './menuPages/Profile';
-import '../css/Menu.css';
 import { getWalletsStorage, setFalseLoggedStorage } from "../data/storage";
+import '../css/Menu.css';
+
+import Profile from './menuPages/Profile';
 import SendTransaction from "./menuPages/SendTransaction";
+import ReceiveTransaction from "./menuPages/ReceiveTransaction";
+
 const history = createBrowserHistory({ forceRefresh: true });
 setupIonicReact();
 
 
 const Menu: React.FC = () => {
   const location = useLocation<{ email: string, fullname: string }>();
-  const [dataEmail, setDataEmail] = useState({ address: 'address', public_key: 'public_key', private_key: 'private_key', wif: 'wif' });
   const [balance, setBalance] = useState([-1, 0]); // 0(BTC), 1(EUR)
   const [EURChange, setEURChange] = useState(1);
   const [transactions, setTransactions] = useState<string[] | []>([]);
 
   const fetchBalance = useCallback(async () => {
     let d = getWalletsStorage()
-    const data = await (await fetch('https://api.blockcypher.com/v1/btc/test3/addrs/' + d[d.logged.email].address + '/balance')).json()
-    //const data = { balance: 3694203 }
+    const data = await (await fetch('https://api.blockcypher.com/v1/bcy/test/addrs/' + d[d.logged.email].address + '/balance')).json()
+    //const data = { balance: 3000000 }
     setBalance([data.balance / 100000000, balance[1]])
   }, [])
   const fetchEURChange = useCallback(async () => {
@@ -57,25 +59,20 @@ const Menu: React.FC = () => {
           email: location.state.email
         }),
       })).text()
-    let splittedData = data.split(',');
+    let splittedData = data.split('?');
     if (splittedData[0] === "True") {
-      setTransactions([])
+      await setTransactions([])
       for (let i = 1; i < splittedData.length - 1; i++) {
         setTransactions(prevArray => [...prevArray, splittedData[i]])
       }
     }
   }, [location.state.email])
-  const fetchDataEmail = useCallback(async () => {
-    let d = getWalletsStorage()
-    setDataEmail(d[location.state.email]);
-  }, [location.state.email])
 
   useEffect(() => {
-    fetchDataEmail();
     fetchEURChange();
     fetchBalance();
     fetchTransactions();
-  }, [fetchBalance, fetchDataEmail, fetchEURChange, fetchTransactions]);
+  }, [fetchBalance, fetchEURChange, fetchTransactions]);
 
   const changeBalanceType = () => {
     if (balance[1] === 0) {
@@ -145,22 +142,26 @@ const Menu: React.FC = () => {
                 <IonIcon slot="icon-only" icon={arrowUpOutline}></IonIcon>
               </IonButton>
             </IonNavLink>
-            <IonButton size="large">
-              <IonIcon slot="icon-only" icon={arrowDownOutline}></IonIcon>
-            </IonButton>
+            <IonNavLink routerDirection="forward" component={() => <ReceiveTransaction />}>
+              <IonButton size="large">
+                <IonIcon slot="icon-only" icon={arrowDownOutline}></IonIcon>
+              </IonButton>
+            </IonNavLink>
           </div>
           <div style={{ height: '44.5%' }}>
             <p className="text-balance3">Transactions</p>
             <IonContent>
               {transactions.map(transaction => {
                 let splittedTransaction = transaction.split(';')
+                let tx = JSON.parse(splittedTransaction[0].replace(/`/g, "\"").replace(/&quot;/ig, '"'))
                 return (
-                  <IonCard key={splittedTransaction[0]}>
+                  <IonCard key={tx}>
                     <IonCardContent>
-                      {splittedTransaction[1]}
-                      <IonText>              value= </IonText>
-                      {splittedTransaction[2]}
-                      <IonText>  BTC</IonText>
+                      <IonText>{splittedTransaction[1]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {tx['outputs'][0]['value'] / 100000000} BTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Confirmed:&nbsp;
+                        {splittedTransaction[2] === '0' ? 'no' : 'yes'}
+                      </IonText>
                     </IonCardContent>
                   </IonCard>
                 )

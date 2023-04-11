@@ -15,22 +15,33 @@ import {
 import { phonePortraitOutline, qrCodeOutline } from 'ionicons/icons';
 import { useState } from 'react';
 import { sendTransaction } from '../../data/transactions';
+import { createBrowserHistory } from 'history';
+import { getWalletsStorage } from '../../data/storage';
+
+const history = createBrowserHistory({ forceRefresh: true });
 
 function SendTransaction() {
     const [presentAlert] = useIonAlert();
-    const [value, setValue] = useState('')
-    const [to, setTo] = useState('')
+    const [value, setValue] = useState()
+    const [to, setTo] = useState('C36fr59PPnzyjDZmxRYwyEbPSo95KtxtqB')
 
     const check = () => {
-        sendTransaction(to, value)
         if (to) {
             if (value) {
-                sendTransaction(to, value).then((val) => {
+                sendTransaction(to, Number(value)).then((val) => {
                     let message = new String(val).split('.')
                     presentAlert({
                         header: message[0],
                         message: message[1],
-                        buttons: ["OK"],
+                        buttons: [
+                            {
+                                text: 'OK',
+                                handler: () => {
+                                    history.push('/mainmenu', { email: getWalletsStorage()['logged']['email'] })
+                                }
+                            }
+                        ],
+
                     })
                 })
             } else {
@@ -66,7 +77,6 @@ function SendTransaction() {
                     flexDirection: 'column',
                     justifyContent: 'space-evenly',
                 }}>
-                    <IonLabel position="stacked" >To</IonLabel>
                     <div style={{
                         display: 'flex',
                         flexDirection: 'row',
@@ -80,7 +90,7 @@ function SendTransaction() {
                         </IonButton>
                     </div>
                     <IonItem>
-                        <IonLabel position="stacked">Value in satoshi</IonLabel>
+                        <IonLabel position="stacked">Value (BTC)</IonLabel>
                         <IonInput type="number" onIonInput={(e: any) => setValue(e.target.value)}></IonInput>
                     </IonItem>
                     <IonButton size="large" expand='block' onClick={check}>Send</IonButton>
