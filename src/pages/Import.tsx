@@ -70,15 +70,15 @@ const Import: React.FC = () => {
                 >
                     <div>
                         <h1 style={{ fontSize: 40 }}>
-                            Import existing address data
+                            Importare dati portafoglio bitcoin
                         </h1>
                     </div>
 
                     <div style={{ paddingTop: "40px" }}>
-                        <IonLabel position="stacked">Email Address</IonLabel>
+                        <IonLabel position="stacked">Indirizzo Email</IonLabel>
                         <IonInput
                             onIonInput={(e: any) => setEmail(e.target.value)}
-                            placeholder="Enter email"
+                            placeholder="Inserire email"
                             type="email"
                         ></IonInput>
                     </div>
@@ -86,14 +86,14 @@ const Import: React.FC = () => {
                         <IonLabel position="stacked">Password</IonLabel>
                         <IonInput
                             onIonInput={(e: any) => setPassword(e.target.value)}
-                            placeholder="Enter password"
+                            placeholder="Inserire password"
                         ></IonInput>
                     </div>
                     <div style={{ paddingTop: "10px" }}>
-                        <IonLabel position="stacked">Confirm Password</IonLabel>
+                        <IonLabel position="stacked">Confermare Password</IonLabel>
                         <IonInput
                             onIonInput={(e: any) => setConfirmPassword(e.target.value)}
-                            placeholder="Enter password"
+                            placeholder="Inserire password"
                         ></IonInput>
                     </div>
                     <br />
@@ -101,40 +101,40 @@ const Import: React.FC = () => {
                         <IonLabel position="stacked">Address</IonLabel>
                         <IonInput
                             onIonInput={(e: any) => setAddress(e.target.value)}
-                            placeholder="Enter address"
+                            placeholder="Inserire address"
                             type="email"
                         ></IonInput>
                     </div>
                     <div style={{ paddingTop: "10px" }}>
-                        <IonLabel position="stacked">Public Key</IonLabel>
+                        <IonLabel position="stacked">Chiave Pubblica</IonLabel>
                         <IonInput
                             onIonInput={(e: any) => setPublicKey(e.target.value)}
-                            placeholder="Enter public key"
+                            placeholder="Inserire chaive pubblica"
                         ></IonInput>
                     </div>
                     <div style={{ paddingTop: "10px" }}>
-                        <IonLabel position="stacked">Private Key</IonLabel>
+                        <IonLabel position="stacked">Chiave privata</IonLabel>
                         <IonInput
                             onIonInput={(e: any) => setPrivateKey(e.target.value)}
-                            placeholder="Enter private key"
+                            placeholder="Inserire chaive privata"
                         ></IonInput>
                     </div>
                     <div style={{ paddingTop: "10px" }}>
                         <IonLabel position="stacked">Wif</IonLabel>
                         <IonInput
                             onIonInput={(e: any) => setWif(e.target.value)}
-                            placeholder="Enter wif"
+                            placeholder="Inserire wif"
                         ></IonInput>
                     </div>
 
 
                     <div style={{ paddingTop: "50px" }}>
                         <IonButton onClick={() => fullRegistration(email, password, confirmpassword, address, public_key, private_key, wif)} size="large" expand="block">
-                            Import
+                            Registrazione
                         </IonButton>
                     </div>
                     <div style={{ paddingTop: "20px", textAlign: "center" }}>
-                        <IonLabel>or</IonLabel>
+                        <IonLabel>o</IonLabel>
                     </div>
                     <div style={{ paddingTop: "0px", textAlign: "center" }}>
                         <IonButton
@@ -144,7 +144,7 @@ const Import: React.FC = () => {
                                 history.push("/login");
                             }}
                         >
-                            Log In
+                            Accesso
                         </IonButton>
                     </div>
                 </div>

@@ -86,7 +86,7 @@ const PasswordLogin: React.FC = () => {
                             history.push("/login");
                         }}
                     >
-                        Log out
+                        Disconnessione
                     </IonButton>
                 </div>
             </div>

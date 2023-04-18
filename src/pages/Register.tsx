@@ -66,14 +66,14 @@ const Register: React.FC = () => {
         <div style={{ height: "8%" }}></div>
         <div>
           <h1 style={{ fontSize: 40 }}>
-            Sign up<br></br>to continue
+            Inscriversi<br></br>per continuare
           </h1>
         </div>
         <div style={{ paddingTop: "40px" }}>
-          <IonLabel position="stacked">Email Address</IonLabel>
+          <IonLabel position="stacked">Indirizzo Email</IonLabel>
           <IonInput
             onIonInput={(e: any) => setEmail(e.target.value)}
-            placeholder="Enter email"
+            placeholder="Inserire email"
             type="email"
           ></IonInput>
         </div>
@@ -81,27 +81,27 @@ const Register: React.FC = () => {
           <IonLabel position="stacked">Password</IonLabel>
           <IonInput
             onIonInput={(e: any) => setPassword(e.target.value)}
-            placeholder="Enter password"
+            placeholder="Inserire password"
           ></IonInput>
         </div>
         <div style={{ paddingTop: "20px" }}>
-          <IonLabel position="stacked">Confirm Password</IonLabel>
+          <IonLabel position="stacked">Conferma Password</IonLabel>
           <IonInput
             onIonInput={(e: any) => setConfirmPassword(e.target.value)}
-            placeholder="Enter password"
+            placeholder="Inserire password"
           ></IonInput>
         </div>
         <div style={{ paddingTop: "50px" }}>
           <IonButton onClick={() => { fullRegistration(email, password, confirmpassword) }} size="large" expand="block">
-            Sign Up
+            Registrazione
           </IonButton>
         </div>
         <div style={{ paddingTop: "20px", textAlign: "center" }}>
-          <IonLabel>or</IonLabel>
+          <IonLabel>o</IonLabel>
         </div>
         <div style={{ paddingTop: "20px" }}>
           <IonButton onClick={() => { history.push('/import') }} expand="block">
-            Import address
+            Importare portafoglio
           </IonButton>
         </div>
         <div style={{ paddingTop: "0px", textAlign: "center" }}>
@@ -112,7 +112,7 @@ const Register: React.FC = () => {
               history.push("/login");
             }}
           >
-            Log In
+            Accesso
           </IonButton>
         </div>
       </div>

@@ -23,23 +23,24 @@ const Remember: React.FC = () => {
                 }}>
                     <div>
                         <h1 style={{ fontSize: 40 }}>
-                            Save this data
+                            Salva questi dati
                         </h1>
                         <br />
                         <div style={{ fontSize: 25 }}>
                             Address: <h1 style={{ fontSize: 25, color: '#32a852' }}>{location.state.address}</h1><br />
-                            Public key: <h1 style={{ fontSize: 25, color: '#32a852' }}>{location.state.public_key}</h1><br />
-                            Private key: <h1 style={{ fontSize: 25, color: '#32a852' }}>{location.state.private_key}</h1><br />
+                            Chiave pubblica: <h1 style={{ fontSize: 25, color: '#32a852' }}>{location.state.public_key}</h1><br />
+                            Chiave privata: <h1 style={{ fontSize: 25, color: '#32a852' }}>{location.state.private_key}</h1><br />
                             Wif: <h1 style={{ fontSize: 25, color: '#32a852' }}>{location.state.wif}</h1>
                         </div>
                     </div>
                     <br /><br />
                     <div>
-                        You should save this data, because CryptoKeeper do not saves them(privacy terms)
+                        É necessario salvare questi dati del portafoglio bitcoin, Crypto Keeper non li salva per motivi di sicurezza e privacy
                         <br />
+                        Non condividere con altri questi dati ad eccezione dell' address e della chiave pubblica
                         No do not share them to other people except for the address and public key
                         <br />
-                        <h1 style={{ fontSize: 23 }}>Check email for confirm</h1>
+                        <h1 style={{ fontSize: 23 }}>Controlla l' email per la conferma</h1>
                     </div>
                     <div style={{ textAlign: "center", paddingTop: "15px", paddingBottom: "20px" }}>
                         <IonButton
@@ -52,7 +53,7 @@ const Remember: React.FC = () => {
                                 history.push("/passwordlogin");
                             }}
                         >
-                            Log In
+                            Accesso
                         </IonButton>
                     </div>
                 </div>

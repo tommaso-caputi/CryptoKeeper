@@ -20,7 +20,7 @@ function ReceiveTransaction() {
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
                     </IonButtons>
-                    <IonTitle>Receive transaction</IonTitle>
+                    <IonTitle>Ricezione transazione</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent class="ion-padding">

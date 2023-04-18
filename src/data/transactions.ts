@@ -14,9 +14,9 @@ export const sendTransaction = async (toAddress: string, value: number) => {
         console.log(changed_tx)
         let a = await (await saveUnsignedtoDB(storageData['logged']['email'], changed_tx, tosign, fromAddress, toAddress, storageData[storageData['logged']['email']]['private_key']))
         if (a === 'Success') {
-            return 'Success.Transaction created successfully, wait for signature and broadcast(check transaction list)'
+            return 'Success.Transazione creata con successo, attendere per la conferma(controlla la lista delle transazioni)'
         } else {
-            return 'Error. Something went wrong, please try again'
+            return 'Error. Qualcosa é andato storto, prova di nuovo'
         }
     }
 }
