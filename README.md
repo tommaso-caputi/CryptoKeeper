@@ -114,6 +114,7 @@ Need to have installed npm and ionic cli
 - [ ] Add Qr code reading and reader
 - [ ] Add NFC reader and listener
 - [ ] Add graphs page
+- [ ] Add page for view all address data
 - [ ] Add all pages in menu
 - [ ] Multi-language Support
     - [ ] Italian
