@@ -48,17 +48,15 @@ const FirstPage = () => {
 
   return (
     <IonPage>
-      <IonContent>
         <div style={{ height: '100%', width: '100%', backgroundColor: 'white', paddingTop: '50px' }}>
           <IonImg src="https://cryptokeeper.altervista.org/APP/LogoCryptoKeeper.png"></IonImg>
           <div style={{ textAlign: 'center' }}>
             <h1 style={{ color: 'black' }}>Crypto Keeper</h1>
           </div>
           <div style={{ paddingTop: '50px', textAlign: 'center', height: '30%' }}>
-            <IonButton size="large" onClick={() => history.push('/login')}>Start Now</IonButton>
+            <IonButton size="large" onClick={() => history.push('/login')}>Inizia</IonButton>
           </div>
         </div>
-      </IonContent>
     </IonPage>
   );
 }

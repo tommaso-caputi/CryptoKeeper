@@ -67,13 +67,13 @@ function SendTransaction() {
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
                     </IonButtons>
-                    <IonTitle>Send transaction</IonTitle>
+                    <IonTitle>Invia transazione</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent class="ion-padding">
+            {/* <IonContent class="ion-padding"> */}
                 <div style={{
                     display: 'flex',
-                    height: '70%',
+                    height: '100%',
                     flexDirection: 'column',
                     justifyContent: 'space-evenly',
                 }}>
@@ -90,12 +90,12 @@ function SendTransaction() {
                         </IonButton>
                     </div>
                     <IonItem>
-                        <IonLabel position="stacked">Value (BTC)</IonLabel>
+                        <IonLabel position="stacked">Importo (BTC)</IonLabel>
                         <IonInput type="number" onIonInput={(e: any) => setValue(e.target.value)}></IonInput>
                     </IonItem>
-                    <IonButton size="large" expand='block' onClick={check}>Send</IonButton>
+                    <IonButton size="large" expand='block' onClick={check}>Invia</IonButton>
                 </div>
-            </IonContent>
+            {/* </IonContent> */}
         </>
     );
 }

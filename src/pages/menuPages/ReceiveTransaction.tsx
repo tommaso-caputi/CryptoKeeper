@@ -9,6 +9,7 @@ import {
     IonIcon,
 } from '@ionic/react';
 import { phonePortraitOutline, qrCodeOutline } from 'ionicons/icons';
+import { getWalletsStorage } from '../../data/storage';
 
 function ReceiveTransaction() {
 
@@ -34,7 +35,7 @@ function ReceiveTransaction() {
                         flexDirection: 'row',
                         justifyContent: 'space-evenly',
                     }}>
-                        <IonButton size="large" shape="round">
+                        <IonButton size="large" shape="round" >
                             <IonIcon slot="icon-only" icon={phonePortraitOutline}></IonIcon>
                         </IonButton>
                         <IonButton size="large" shape="round">

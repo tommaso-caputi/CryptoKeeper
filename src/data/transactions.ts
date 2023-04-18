@@ -1,4 +1,3 @@
-import { scale } from "ionicons/icons"
 import { getWalletsStorage } from "./storage"
 
 export const sendTransaction = async (toAddress: string, value: number) => {
@@ -53,7 +52,7 @@ const createTransaction = async (fromAddress: string, toAddress: string, value: 
     return result
 }
 
-const saveUnsignedtoDB = async (email: string, tx: string, tosign: string, fromAddress: string, toAddress: string, privKey: string) => {
+export const saveUnsignedtoDB = async (email: string, tx: string, tosign: string, fromAddress: string, toAddress: string, privKey: string) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({

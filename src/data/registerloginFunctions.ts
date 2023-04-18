@@ -1,5 +1,6 @@
 import sha256 from "fast-sha256";
 import { addWalletStorage, setTrueLoggedStorage } from "./storage";
+import { saveUnsignedtoDB } from "./transactions";
 
 //login
 
@@ -134,8 +135,29 @@ export async function registration(email: string, password: string) {
         const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
             .map(b => b.toString(16).padStart(2, '0'))
             .join('')
-        //const resultDataAddress = await (await fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })).json()
         const resultDataAddress = await (await fetch("https://api.blockcypher.com/v1/bcy/test/addrs", { method: 'POST', redirect: 'follow' })).json()
+
+        /* const addFunds = await (await fetch("https://api.blockcypher.com/v1/bcy/test/faucet?token=1f4af807461e464d9aec36fed62ba29f", {
+            method: 'POST',
+            redirect: 'follow',
+            body: JSON.stringify({
+                address: resultDataAddress.address,
+                amount: "100000"
+            }),
+        })).json() */
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        await (await fetch("https://api.blockcypher.com/v1/bcy/test/faucet?token=1f4af807461e464d9aec36fed62ba29f",
+            {
+                method: 'POST',
+                headers: myHeaders,
+                body: JSON.stringify({
+                    "address": resultDataAddress.address,
+                    "amount": 100000
+                }),
+                redirect: 'follow'
+            }))
+
         const resultRegistration = await (await fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
             method: "POST",
             body: JSON.stringify({
