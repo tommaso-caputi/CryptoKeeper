@@ -1,6 +1,5 @@
 import sha256 from "fast-sha256";
 import { addWalletStorage, setTrueLoggedStorage } from "./storage";
-import { saveUnsignedtoDB } from "./transactions";
 
 //login
 
@@ -149,7 +148,7 @@ export async function registration(email: string, password: string) {
                     "amount": 100000
                 }),
                 redirect: 'follow'
-            }))
+            })).json()
 
         const resultRegistration = await (await fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
             method: "POST",
