@@ -97,7 +97,7 @@ const Menu: React.FC = () => {
               history.push('/login')
             }
             }>
-              <IonLabel>Log out</IonLabel>
+              <IonLabel>Disconnessione</IonLabel>
             </IonItem>
           </IonList>
         </IonContent>
@@ -119,7 +119,7 @@ const Menu: React.FC = () => {
           </div>
 
           <div style={{ height: '10%', paddingTop: '10px' }}>
-            <p className="text-balance1">Balance</p>
+            <p className="text-balance1">Bilancio</p>
             <h1 className="text-balance2" onClick={changeBalanceType}>
               {balance[1] === 0 &&
                 balance[0].toFixed(6) + ' BTC'
@@ -149,7 +149,7 @@ const Menu: React.FC = () => {
             </IonNavLink>
           </div>
           <div style={{ height: '44.5%' }}>
-            <p className="text-balance3">Transactions</p>
+            <p className="text-balance3">Transazioni</p>
             <IonContent>
               {transactions.map(transaction => {
                 let splittedTransaction = transaction.split(';')
@@ -157,9 +157,9 @@ const Menu: React.FC = () => {
                 return (
                   <IonCard key={tx}>
                     <IonCardContent>
-                      <IonText>{splittedTransaction[1]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {tx['outputs'][0]['value'] / 100000000} BTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        Confirmed:&nbsp;
+                      <IonText>{splittedTransaction[1]} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {tx['outputs'][0]['value'] / 100000000} BTC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Confirmata:&nbsp;
                         {splittedTransaction[2] === '0' ? 'no' : 'yes'}
                       </IonText>
                     </IonCardContent>

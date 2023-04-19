@@ -58,21 +58,21 @@ function Profile() {
             .then(result => {
                 if (result === "Success") {
                     present({
-                        message: 'Full name and password changed successfully',
+                        message: 'Nome e Cognome cambiati con successo',
                         duration: 1500,
                         position: 'bottom'
                     });
                     setFullname(fullname);
                 } else {
                     present({
-                        message: 'Something went wrong, try again',
+                        message: 'Qualcosa é andato storto, prova di nuovo',
                         duration: 1500,
                         position: 'bottom'
                     });
                 }
             })
             .catch(error => present({
-                message: 'Something went wrong, try again: ' + error.message,
+                message: 'Qualcosa é andato storto, prova di nuovo: ' + error.message,
                 duration: 1500,
                 position: 'bottom'
             }));
@@ -84,7 +84,7 @@ function Profile() {
                     <IonButtons slot="start">
                         <IonBackButton></IonBackButton>
                     </IonButtons>
-                    <IonTitle>Profile</IonTitle>
+                    <IonTitle>Profilo</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent class="ion-padding">
@@ -95,7 +95,7 @@ function Profile() {
                     justifyContent: 'space-evenly',
                 }}>
                     <IonItem>
-                        <IonLabel position="stacked">Full name</IonLabel>
+                        <IonLabel position="stacked">Nome Cognome</IonLabel>
                         <IonInput onIonInput={(e: any) => setFullname(e.target.value)} placeholder={fullname}></IonInput>
                     </IonItem>
                     <IonItem>
@@ -112,14 +112,14 @@ function Profile() {
                     expand='block'
                     onClick={() =>
                         present2({
-                            header: 'Confirm',
+                            header: 'Modifica',
                             buttons: [
                                 {
-                                    text: 'Update',
+                                    text: 'Conferma',
                                     role: "update"
                                 },
                                 {
-                                    text: 'Cancel',
+                                    text: 'Cancella',
                                     role: 'cancel'
                                 },
                             ],
@@ -131,7 +131,7 @@ function Profile() {
                         })
                     }
                 >
-                    Save
+                    Salva
                 </IonButton>
             </IonContent>
         </>

@@ -59,19 +59,19 @@ const PasswordLogin: React.FC = () => {
                 <div style={{ height: "8%" }}></div>
                 <div>
                     <h1 style={{ fontSize: 40 }}>
-                        Log in<br></br>to continue
+                        Accedere<br></br>per continuare
                     </h1>
                 </div>
                 <div style={{ paddingTop: "20px" }}>
                     <IonLabel position="stacked">Password</IonLabel>
                     <IonInput
                         onIonInput={(e: any) => setPassword(e.target.value)}
-                        placeholder="Enter password"
+                        placeholder="Inserire password"
                     ></IonInput>
                 </div>
                 <div style={{ paddingTop: "50px" }}>
                     <IonButton onClick={login} size="large" expand="block">
-                        Log In
+                        Accesso
                     </IonButton>
                 </div>
                 <div style={{ paddingTop: "20px", textAlign: "center" }}>
@@ -86,7 +86,7 @@ const PasswordLogin: React.FC = () => {
                             history.push("/login");
                         }}
                     >
-                        Log out
+                        Disconnessione
                     </IonButton>
                 </div>
             </div>

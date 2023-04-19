@@ -29,15 +29,15 @@ export function loginEmailPassword(email: string, password: string) {
                         let d = JSON.parse(localStorage.getItem('wallets')!)
                         if (d[email] !== undefined) { //check if wallet should be imported
                             setTrueLoggedStorage(email)
-                            resolve("Success.Logged successfully");
+                            resolve("Success.Loggato con successo");
                         } else {
-                            resolve("Failed.Should be imported address data");
+                            resolve("Failed.Dovresti importare i dati del portafoglio");
                         }
                     } else {
-                        resolve("Failed.Email is not confirmed");
+                        resolve("Failed.L' email non é stata confermata");
                     }
                 } else {
-                    resolve("Failed.Email or password are incorrect");
+                    resolve("Failed.Email o password sono incorretti");
                 }
             });
         });
@@ -68,10 +68,10 @@ export const loginPassword = (email: string, password: string) => {
                     if (data[1] === "1") {
                         resolve("Success.Logged successfully." + data[2])
                     } else {
-                        resolve("Failed.Email is not confirmed")
+                        resolve("Failed.L' email non é stata confermata")
                     }
                 } else {
-                    resolve("Failed.Password is incorrect")
+                    resolve("Failed.La password non é corretta")
                 }
             });
         });
@@ -93,12 +93,12 @@ export const checks = (email: string, password: string, confirmpassword: string)
     return new Promise(function (resolve) {
         if (password.length > 0) {
             if (password !== confirmpassword) {
-                resolve("Alert.Passwords are differents")
+                resolve("Alert.Le password non coincidono")
             } else {
                 //go ahead
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
-                    resolve("Alert.Email is not valid")
+                    resolve("Alert.L' email non é valida")
                 } else {
                     //go ahead
                     fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
@@ -113,14 +113,14 @@ export const checks = (email: string, password: string, confirmpassword: string)
                                 // go ahead
                                 resolve("Success")
                             } else {
-                                resolve("Failed.This email has already an account")
+                                resolve("Failed.Questa email ha giá un' account")
                             }
                         });
                     });
                 }
             }
         } else {
-            resolve("Alert.Password too short")
+            resolve("Alert.La password é troppo corta")
         }
     });
 };
@@ -134,8 +134,22 @@ export async function registration(email: string, password: string) {
         const passwordHash = Array.from(sha256(new TextEncoder().encode(password)))
             .map(b => b.toString(16).padStart(2, '0'))
             .join('')
-        //const resultDataAddress = await (await fetch("https://api.blockcypher.com/v1/btc/test3/addrs", { method: 'POST', redirect: 'follow' })).json()
         const resultDataAddress = await (await fetch("https://api.blockcypher.com/v1/bcy/test/addrs", { method: 'POST', redirect: 'follow' })).json()
+
+        //add funds
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        await (await fetch("https://api.blockcypher.com/v1/bcy/test/faucet?token=1f4af807461e464d9aec36fed62ba29f",
+            {
+                method: 'POST',
+                headers: myHeaders,
+                body: JSON.stringify({
+                    "address": resultDataAddress.address,
+                    "amount": 100000
+                }),
+                redirect: 'follow'
+            })).json()
+
         const resultRegistration = await (await fetch("https://cryptokeeper.altervista.org/APP/webhook.php", {
             method: "POST",
             body: JSON.stringify({
@@ -154,14 +168,14 @@ export async function registration(email: string, password: string) {
                 }),
             })
             addWalletStorage(email, resultDataAddress.address, resultDataAddress.public, resultDataAddress.private, resultDataAddress.wif)
-            resolve("Success.Account successfully created."
+            resolve("Success.Account creato con successo."
                 + resultDataAddress.private + "."
                 + resultDataAddress.public + "."
                 + resultDataAddress.address + "."
                 + resultDataAddress.wif
             )
         } else {
-            resolve("Failed.Something went wrong, please try again")
+            resolve("Failed.Qualcosa é andato storto, prova di nuovo")
         }
     });
 }
@@ -193,9 +207,9 @@ export async function importRegistration(email: string, password: string, addres
                 }),
             })
             addWalletStorage(email, public_key, address, private_key, wif)
-            resolve("Success.Account successfully created")
+            resolve("Success.Account creato con successo")
         } else {
-            resolve("Failed.Something went wrong, please try again")
+            resolve("Failed.Qualcosa é andato storto, prova di nuovo")
         }
     });
 }
