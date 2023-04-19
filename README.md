@@ -111,7 +111,7 @@ Need to have installed npm and ionic cli
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Add Qr code reading and reader
+- [X] Add Qr code reading and reader
 - [ ] Add NFC reader and listener
 - [ ] Add graphs page
 - [ ] Add page for view all address data
