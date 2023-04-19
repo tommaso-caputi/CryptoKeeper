@@ -18,12 +18,17 @@ import { sendTransaction } from '../../data/transactions';
 import { createBrowserHistory } from 'history';
 import { getWalletsStorage } from '../../data/storage';
 
+import { QrScanner } from '@yudiel/react-qr-scanner';
+
 const history = createBrowserHistory({ forceRefresh: true });
 
 function SendTransaction() {
     const [presentAlert] = useIonAlert();
     const [value, setValue] = useState()
-    const [to, setTo] = useState('C36fr59PPnzyjDZmxRYwyEbPSo95KtxtqB')
+    //const [to, setTo] = useState('C36fr59PPnzyjDZmxRYwyEbPSo95KtxtqB')
+    const [to, setTo] = useState()
+
+    const [showQr, setShowQr] = useState(false)
 
     const check = () => {
         if (to) {
@@ -60,6 +65,17 @@ function SendTransaction() {
         }
     }
 
+    const qrcodeScanner = (
+        <QrScanner
+            onDecode={(result) => {
+                setShowQr(false)
+                setTo(result)
+            }
+            }
+            onError={(error) => console.log(error?.message)}
+        />
+    )
+
     return (
         <>
             <IonHeader>
@@ -70,7 +86,7 @@ function SendTransaction() {
                     <IonTitle>Invia transazione</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            {/* <IonContent class="ion-padding"> */}
+            <IonContent class="ion-padding">
                 <div style={{
                     display: 'flex',
                     height: '100%',
@@ -85,17 +101,24 @@ function SendTransaction() {
                         <IonButton size="large" shape="round">
                             <IonIcon slot="icon-only" icon={phonePortraitOutline}></IonIcon>
                         </IonButton>
-                        <IonButton size="large" shape="round">
+                        <IonButton size="large" shape="round" onClick={() => {
+                            setShowQr(!showQr)
+                        }}>
                             <IonIcon slot="icon-only" icon={qrCodeOutline}></IonIcon>
                         </IonButton>
                     </div>
+                    <IonItem>
+                        <IonLabel position="stacked">To</IonLabel>
+                        <IonInput >{to}</IonInput>
+                    </IonItem>
                     <IonItem>
                         <IonLabel position="stacked">Importo (BTC)</IonLabel>
                         <IonInput type="number" onIonInput={(e: any) => setValue(e.target.value)}></IonInput>
                     </IonItem>
                     <IonButton size="large" expand='block' onClick={check}>Invia</IonButton>
+                    {showQr && qrcodeScanner}
                 </div>
-            {/* </IonContent> */}
+            </IonContent>
         </>
     );
 }
