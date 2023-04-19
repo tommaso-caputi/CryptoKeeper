@@ -66,7 +66,7 @@ export const loginPassword = (email: string, password: string) => {
                 let data = response.split(".");
                 if (data[3] === "True") {
                     if (data[1] === "1") {
-                        resolve("Success.Logged successfully." + data[2])
+                        resolve("Success.Accesso avvenuto con successo." + data[2])
                     } else {
                         resolve("Failed.L' email non é stata confermata")
                     }

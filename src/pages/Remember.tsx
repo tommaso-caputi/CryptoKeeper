@@ -38,7 +38,6 @@ const Remember: React.FC = () => {
                         É necessario salvare questi dati del portafoglio bitcoin, Crypto Keeper non li salva per motivi di sicurezza e privacy
                         <br />
                         Non condividere con altri questi dati ad eccezione dell' address e della chiave pubblica
-                        No do not share them to other people except for the address and public key
                         <br />
                         <h1 style={{ fontSize: 23 }}>Controlla l' email per la conferma</h1>
                     </div>
