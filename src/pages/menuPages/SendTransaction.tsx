@@ -109,7 +109,7 @@ function SendTransaction() {
                     </div>
                     <IonItem>
                         <IonLabel position="stacked">To</IonLabel>
-                        <IonInput >{to}</IonInput>
+                        <IonInput disabled={true}>{to}</IonInput>
                     </IonItem>
                     <IonItem>
                         <IonLabel position="stacked">Importo (BTC)</IonLabel>

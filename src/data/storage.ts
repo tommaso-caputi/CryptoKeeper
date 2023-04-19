@@ -1,8 +1,8 @@
 export const initWalletsStorage = () => {
     const exists = localStorage.getItem('wallets')
     if (!exists) {
-        //localStorage.setItem('wallets', JSON.stringify({ logged: { 'bool': false, 'email': '' } }))
-        localStorage.setItem("wallets", JSON.stringify({
+        localStorage.setItem('wallets', JSON.stringify({ logged: { 'bool': false, 'email': '' } }))
+        /* localStorage.setItem("wallets", JSON.stringify({
             'deb@deb.com': {
                 'address': 'C7FEhqdB9pJqr2BTgS4gEJfNKezZZupTkv',
                 'wif': 'BresNKt7kfwvqxs5QFgNm1Jy2BT9UVe7zcAJJKMDtqUo9WQRH7rq',
@@ -13,7 +13,7 @@ export const initWalletsStorage = () => {
                 'bool': true,
                 'email': 'deb@deb.com'
             }
-        }));
+        })); */
     }
 }
 
