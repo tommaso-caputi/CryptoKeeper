@@ -26,7 +26,7 @@ function SendTransaction() {
     const [presentAlert] = useIonAlert();
     const [value, setValue] = useState()
     //const [to, setTo] = useState('C36fr59PPnzyjDZmxRYwyEbPSo95KtxtqB')
-    const [to, setTo] = useState()
+    const [to, setTo] = useState('')
 
     const [showQr, setShowQr] = useState(false)
 
