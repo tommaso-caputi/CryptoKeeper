@@ -64,7 +64,7 @@
 
 * [![React][React.js]][React-url]
 * [<img width="100" src="https://i.ibb.co/FhJ3wXG/Altervista-Logo-4.png" />](https://it.altervista.org/)
-* [<img width="100" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Ionic-logo-landscape.svg/1200px-Ionic-logo-landscape.svg.png" />](https://ionicframework.com/)
+* [<img width="82" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Ionic-logo-landscape.svg/1200px-Ionic-logo-landscape.svg.png" />](https://ionicframework.com/)
 
 
 <!-- GETTING STARTED -->
