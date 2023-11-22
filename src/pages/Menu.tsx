@@ -125,7 +125,7 @@ const Menu: React.FC = () => {
                 balance[0].toFixed(6) + ' BTC'
               }
               {balance[1] === 1 &&
-                '$' + (balance[0] * EURChange).toFixed(2)
+                '$' + (balance[0] * EURChange).toFixed(2) + " EUR"
               }
             </h1>
           </div>
