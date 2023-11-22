@@ -82,7 +82,7 @@ function Profile() {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonBackButton></IonBackButton>
+                        <IonBackButton text="Indietro"></IonBackButton>
                     </IonButtons>
                     <IonTitle>Profilo</IonTitle>
                 </IonToolbar>

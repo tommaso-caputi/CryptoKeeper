@@ -2,12 +2,18 @@
 
 buildscript {
     
+    ext {
+        agp_version = '7.2.0'
+        agp_version1 = '8.1.4'
+        agp_version2 = '8.1.4'
+        agp_version3 = '7.3.0'
+    }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.4'
+        classpath "com.android.tools.build:gradle:$agp_version3"
         classpath 'com.google.gms:google-services:4.3.13'
 
         // NOTE: Do not place your application dependencies here; they belong
