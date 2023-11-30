@@ -105,6 +105,7 @@ Need to have installed npm and ionic cli
 - [ ] Add all pages in menu
 - [ ] Multi-language Support
     - [ ] Italian
+- [ ] Add fees preferencies 
     
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
