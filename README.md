@@ -67,7 +67,7 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Crypto keeper is a crypto wallet build with ionic and react, you need to install all the essential for run 
+Crypto keeper is a crypto wallet build with ionic and react
 
 ### Prerequisites
 
